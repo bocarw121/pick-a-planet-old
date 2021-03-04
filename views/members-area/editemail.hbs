@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="update-profile">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>update Profile | Email</title>
+    <script src="https://progressier.com/client/script.js?id=hZIXCm6fyATsuNjyaOZm"></script> 
+   <link rel="stylesheet" href="/public/css/bootstrap.css">
+    <link rel="stylesheet" href="/public/css/style.css" />
+  </head>
+  <body>
+    {{> header}}
+   {{> nav}}
+    {{!-- Registration form --}}
+
+    <div class="container edit-email-container">
+      <div class="row">
+        <div class="col-12 mb-5 mt-5">
+          <div class="card">
+            <div class="card-header">
+              <h1>Update your email</h1>
+            </div>
+            <div class="card-body">
+              <h1>{{team.name}}</h1>
+              <form action="/auth/editemail" method="POST">
+                <div class="form-group">
+                  <label for="email">Current email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="currentEmail"
+                    name="currentEmail"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="emailConfirm">Confirm email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="emailConfirm"
+                    name="emailConfirm"
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary">Confirm</button>
+              </form>
+            </div>
+            {{!-- Variable --}} {{#if message}}
+            <h4 class="alert alert-danger mt-4">{{message}}</h4>
+            {{/if}} {{#if complete}}
+            <h4 class="alert alert-success mt-4">{{complete}}</h4>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+    </div>
+     {{> footer}}
+     {{> script}}
+  </body>
+</html>

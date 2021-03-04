@@ -1,0 +1,193 @@
+/* Particles Header */
+
+#particles-js h1 {
+  font-family: var(--lato);
+  position: absolute;
+  color: #4d9faa;
+  margin-left: auto;
+  margin-right: auto;
+  top: 40%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: clamp(2.6rem, 0.8857rem + 4.5714vw, 5rem);
+
+  opacity: 0.9;
+}
+
+body {
+  background-image: linear-gradient(
+    to right top,
+    #03031e,
+    #03041d,
+    #03041b,
+    #03051a,
+    #030518,
+    #030519,
+    #04061b,
+    #04061c,
+    #050721,
+    #060725,
+    #06082a,
+    #06082e
+  );
+}
+
+/* Page content */
+main {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-top: 50px;
+  margin-right: 10px;
+}
+
+.planet-title {
+  text-align: center;
+  color: rgb(247, 223, 178);
+  font-size: 3rem;
+  margin-bottom: 30px;
+}
+
+.planet-content {
+  margin-bottom: 80px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
+}
+
+.planet-content h2 {
+  margin-bottom: 20px;
+  color: rgb(247, 223, 178);
+  text-align: center;
+  font-size: clamp(2.6rem, 2.3143rem + 0.7619vw, 3rem);
+  font-family: var(--roboto);
+}
+
+.planet-content p {
+  color: var(--color-light);
+  font-size: clamp(1.4rem, 0.9714rem + 1.1429vw, 2rem);
+  line-height: 1.7;
+  font-family: 'Lato', sans-serif;
+  margin-bottom: 60px;
+}
+
+.planet-content .pluto-page-main {
+  width: 400px;
+  height: 30px;
+}
+
+.planet-content-image-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.planet-content-image-wrap .mobile-pics {
+  display: none;
+}
+
+.planet-content-image-wrap img {
+  margin-bottom: 50px;
+}
+
+/* Planet Facts */
+.facts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid rgb(247, 223, 178);
+  border-radius: 50px;
+  width: 25.5rem;
+  padding: 20px;
+  text-align: center;
+  background-color: black;
+  margin-top: 100px;
+  margin-right: 100px;
+}
+@keyframes scale {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.2);
+  }
+}
+
+.facts h2 {
+  color: rgb(247, 223, 178);
+  font-size: 1.8rem;
+  margin: 20px 0;
+}
+
+.facts img {
+  width: 300px;
+  animation: scale 10s infinite linear;
+}
+
+.facts p {
+  font-size: 1.3rem;
+  color: var(--color-light);
+
+  margin: 20px 0;
+}
+
+/* Media Queries */
+
+/* width adjustments */
+@media screen and (max-width: 1200px) {
+  .facts {
+    margin-bottom: 100px;
+    width: 17rem;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+@media screen and (max-width: 1005px) {
+}
+
+@media screen and (max-width: 807px) {
+  .planet-content-image-wrap .desktop-pics {
+    display: none;
+    margin-bottom: 50px;
+  }
+
+  .planet-content-image-wrap .mobile-pics {
+    display: block;
+    margin-bottom: 50px;
+  }
+}
+
+@media screen and (max-width: 750px) {
+}
+/* Smartphones (portrait and landscape ) ----------- */
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .planet-content {
+    width: 90%;
+    text-align: center;
+  }
+
+  .planet-content-image-wrap .desktop-pics {
+    display: none;
+    margin-bottom: 50px;
+  }
+
+  .planet-content-image-wrap .mobile-pics {
+    display: block;
+    margin-bottom: 50px;
+  }
+}
+
+/* Tablets (landscape) ----------- */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+}
+
+/* Tablets (portrait) ----------- */
+@media only screen and (min-device-width: 500px) and (max-device-width: 1024px) and (orientation: portrait) {
+}
+
+@media screen and (max-height: 500px) {
+}

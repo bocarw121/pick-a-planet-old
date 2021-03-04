@@ -1,0 +1,84 @@
+<nav>
+  <ul class="nav-wrapper">
+    <li class='main-nav-link center'>
+      <a  href='/'>
+        Home
+      </a>
+    </li>
+    <li class='main-nav-link center'>
+      <button >
+        Planets
+      </button>
+      <ul class='nav-planet-list'>
+        <li>
+          <a href='/planets/mercury'>
+            Mercury
+          </a>
+        </li>
+        <li>
+          <a href='/planets/venus'>
+            Venus
+          </a>
+        </li>
+        <li>
+          <a href='/planets/earth'>
+            Earth
+          </a>
+        </li>
+        <li>
+          <a href='/planets/mars'>
+            Mars
+          </a>
+        </li>
+        <li>
+          <a href='/planets/jupiter'>
+            Jupiter
+          </a>
+        </li>
+        <li>
+          <a href='/planets/saturn'>
+            Saturn
+          </a>
+        </li>
+        <li>
+          <a href='/planets/uranus'>
+            Uranus
+          </a>
+        </li>
+        <li>
+          <a href='/planets/neptune'>
+            Neptune
+          </a>
+        </li>
+        <li>
+          <a href='/planets/pluto'>
+            Pluto
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class='main-nav-link center'>
+      <a  href='/contact'>
+        Contact
+      </a>
+    </li>
+    </ul>  
+    <div class="login" >
+    {{#if user}}
+        <a  href='/profile'>
+          Profile
+        </a>
+        <a  href='/auth/logout'>
+          Logout
+        </a>
+    {{else}}
+        <a href='/register'>
+          Register
+        </a>
+        <a href='/login'>
+          Login
+        </a>
+      </div>
+    {{/if}}
+  
+</nav>
