@@ -3,19 +3,19 @@
 #particles-js h1 {
   font-family: var(--lato);
   position: absolute;
-  color: #4d9faa;
+  color: hsl(188, 33%, 78%);
   margin-left: auto;
   margin-right: auto;
   top: 40%;
   left: 0;
   right: 0;
   text-align: center;
-  font-size: clamp(2.6rem, 0.8857rem + 4.5714vw, 5rem);
+  font-size: clamp(2.6rem, 1.6769rem + 3.6923vw, 5rem);
 
   opacity: 0.9;
 }
 
-body {
+body.planets {
   background-image: linear-gradient(
     to right top,
     #03031e,
@@ -34,43 +34,38 @@ body {
 }
 
 /* Page content */
-main {
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  margin-top: 50px;
-  margin-right: 10px;
+.planet-content {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: 4fr 1fr;
+  margin-top: 70px;
 }
 
 .planet-title {
   text-align: center;
-  color: rgb(247, 223, 178);
-  font-size: 3rem;
+  color: hsl(39, 81%, 83%);
+  font-size: clamp(4.2rem, 3.8923rem + 1.2308vw, 5rem);
   margin-bottom: 30px;
-}
-
-.planet-content {
-  margin-bottom: 80px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 60%;
 }
 
 .planet-content h2 {
   margin-bottom: 20px;
-  color: rgb(247, 223, 178);
+  color: hsl(39, 81%, 83%);
   text-align: center;
-  font-size: clamp(2.6rem, 2.3143rem + 0.7619vw, 3rem);
+  font-size: clamp(2.2rem, 1.9692rem + 0.9231vw, 2.8rem);
   font-family: var(--roboto);
 }
 
 .planet-content p {
   color: var(--color-light);
-  font-size: clamp(1.4rem, 0.9714rem + 1.1429vw, 2rem);
+  font-size: clamp(1rem, 0.8462rem + 0.6154vw, 1.4rem);
+  width: clamp(45ch, 50%, 75ch);
   line-height: 1.7;
   font-family: 'Lato', sans-serif;
   margin-bottom: 60px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .planet-content .pluto-page-main {
@@ -97,14 +92,14 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid rgb(247, 223, 178);
+  border: 1px solid hsl(39, 81%, 83%);
   border-radius: 50px;
   width: 25.5rem;
   padding: 20px;
   text-align: center;
   background-color: black;
-  margin-top: 100px;
-  margin-right: 100px;
+  position: relative;
+  right: 100px;
 }
 @keyframes scale {
   from {
@@ -117,7 +112,7 @@ main {
 }
 
 .facts h2 {
-  color: rgb(247, 223, 178);
+  color: hsl(39, 81%, 83%);
   font-size: 1.8rem;
   margin: 20px 0;
 }
@@ -130,23 +125,21 @@ main {
 .facts p {
   font-size: 1.3rem;
   color: var(--color-light);
-
   margin: 20px 0;
 }
 
 /* Media Queries */
 
 /* width adjustments */
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1320px) {
+  .planet-content {
+    grid-template-columns: 1fr;
+  }
   .facts {
-    margin-bottom: 100px;
-    width: 17rem;
     margin-right: auto;
     margin-left: auto;
+    margin-bottom: 50px;
   }
-}
-
-@media screen and (max-width: 1005px) {
 }
 
 @media screen and (max-width: 807px) {
@@ -161,15 +154,8 @@ main {
   }
 }
 
-@media screen and (max-width: 750px) {
-}
 /* Smartphones (portrait and landscape ) ----------- */
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
-  .planet-content {
-    width: 90%;
-    text-align: center;
-  }
-
   .planet-content-image-wrap .desktop-pics {
     display: none;
     margin-bottom: 50px;
@@ -179,15 +165,4 @@ main {
     display: block;
     margin-bottom: 50px;
   }
-}
-
-/* Tablets (landscape) ----------- */
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
-}
-
-/* Tablets (portrait) ----------- */
-@media only screen and (min-device-width: 500px) and (max-device-width: 1024px) and (orientation: portrait) {
-}
-
-@media screen and (max-height: 500px) {
 }

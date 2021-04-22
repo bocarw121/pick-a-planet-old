@@ -1,4 +1,4 @@
-body {
+body.index {
   background: radial-gradient(circle at bottom, navy 0, black 100%);
   width: 100%;
   font-family: var(--roboto);
