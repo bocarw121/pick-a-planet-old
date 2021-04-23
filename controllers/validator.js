@@ -1,6 +1,4 @@
-const db = require("../util/database");
-
-const registrationValidator = (req, res, next) => {
+const validateRegistration = (db) => (req, res, next) => {
   const { firstName, lastName, email, password, passwordConfirm } = req.body;
 
   if (!password || !email || !firstName || !lastName) {
@@ -31,4 +29,6 @@ const registrationValidator = (req, res, next) => {
   });
 };
 
-module.exports = registrationValidator;
+module.exports = {
+  validateRegistration,
+};

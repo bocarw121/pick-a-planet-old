@@ -1,5 +1,6 @@
-const authController = require("../controllers/auth");
+const { isLoggedIn } = require("../controllers/isLoggedIn");
 const express = require("express");
+
 const router = express.Router();
 
 const userInfo = (req, res, next) => {
@@ -7,17 +8,17 @@ const userInfo = (req, res, next) => {
   next();
 };
 
-router.get("/", authController.isLoggedIn, userInfo, (req, res) => {
+router.get("/", isLoggedIn, userInfo, (req, res) => {
   res.render("index");
 });
 
 // Route for register
-router.get("/register", (req, res) => {
+router.get("/register", isLoggedIn, (req, res) => {
   res.render("register");
 });
 
 // Route for login
-router.get("/login", authController.isLoggedIn, (req, res) => {
+router.get("/login", isLoggedIn, (req, res) => {
   if (req.user) {
     res.redirect("profile");
   } else {
@@ -26,7 +27,7 @@ router.get("/login", authController.isLoggedIn, (req, res) => {
 });
 
 // Route for contact
-router.get("/contact", authController.isLoggedIn, userInfo, (req, res) => {
+router.get("/contact", isLoggedIn, userInfo, (req, res) => {
   res.render("contact");
 });
 
@@ -43,7 +44,7 @@ router.get("/sources", (req, res) => {
 /*     Protected pages         */
 
 // Route for profile
-router.get("/profile", authController.isLoggedIn, userInfo, (req, res) => {
+router.get("/profile", isLoggedIn, userInfo, (req, res) => {
   if (req.user) {
     res.render("profile");
   } else {
@@ -52,7 +53,7 @@ router.get("/profile", authController.isLoggedIn, userInfo, (req, res) => {
 });
 
 // Route to edit password
-router.get("/editpassword", authController.isLoggedIn, userInfo, (req, res) => {
+router.get("/editpassword", isLoggedIn, userInfo, (req, res) => {
   if (req.user) {
     res.render("editpassword");
   } else {
@@ -61,7 +62,7 @@ router.get("/editpassword", authController.isLoggedIn, userInfo, (req, res) => {
 });
 
 // Route to edit email
-router.get("/editemail", authController.isLoggedIn, userInfo, (req, res) => {
+router.get("/editemail", isLoggedIn, userInfo, (req, res) => {
   if (req.user) {
     res.render("editemail");
   } else {
@@ -70,17 +71,12 @@ router.get("/editemail", authController.isLoggedIn, userInfo, (req, res) => {
 });
 
 // Route to change password if user clicks link in email sent
-router.get(
-  "/loginandchange",
-  authController.isLoggedIn,
-  userInfo,
-  (req, res) => {
-    if (req.user) {
-      res.render("profile");
-    } else {
-      res.redirect("/");
-    }
+router.get("/loginandchange", isLoggedIn, userInfo, (req, res) => {
+  if (req.user) {
+    res.render("profile");
+  } else {
+    res.redirect("/");
   }
-);
+});
 
 module.exports = router;

@@ -1,4 +1,4 @@
-const authController = require("../controllers/auth");
+const { isLoggedIn } = require("../controllers/isLoggedIn");
 const express = require("express");
 const router = express.Router();
 
@@ -31,22 +31,22 @@ const planetRoutes = (req, res) => {
 
 // planets routes
 
-router.get("/earth", authController.isLoggedIn, userInfo, planetRoutes);
+router.get("/earth", isLoggedIn, userInfo, planetRoutes);
 
-router.get("/jupiter", authController.isLoggedIn, userInfo, planetRoutes);
+router.get("/jupiter", isLoggedIn, userInfo, planetRoutes);
 
-router.get("/mars", authController.isLoggedIn, userInfo, planetRoutes);
+router.get("/mars", isLoggedIn, userInfo, planetRoutes);
 
-router.get("/mercury", authController.isLoggedIn, userInfo, planetRoutes);
+router.get("/mercury", isLoggedIn, userInfo, planetRoutes);
 
-router.get("/neptune", authController.isLoggedIn, userInfo, planetRoutes);
+router.get("/neptune", isLoggedIn, userInfo, planetRoutes);
 
-router.get("/pluto", authController.isLoggedIn, userInfo, planetRoutes);
+router.get("/pluto", isLoggedIn, userInfo, planetRoutes);
 
-router.get("/saturn", authController.isLoggedIn, userInfo, planetRoutes);
+router.get("/saturn", isLoggedIn, userInfo, planetRoutes);
 
-router.get("/uranus", authController.isLoggedIn, userInfo, planetRoutes);
+router.get("/uranus", isLoggedIn, userInfo, planetRoutes);
 
-router.get("/venus", authController.isLoggedIn, userInfo, planetRoutes);
+router.get("/venus", isLoggedIn, userInfo, planetRoutes);
 
 module.exports = router;
