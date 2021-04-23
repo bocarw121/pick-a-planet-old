@@ -7,15 +7,14 @@
     <meta name="keywords" content="Saturn, Saturn orbit, Saturn description, Saturn project information">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Saturn</title>
-    <script src="https://progressier.com/client/script.js?id=hZIXCm6fyATsuNjyaOZm"></script> 
-    <link rel="stylesheet" href="/public/css/style.css" />
-    <link rel="stylesheet" href="/public/css/planets-style.css" />
+    {{> favicons}}
+    {{> planetStyle}}
   </head>
-  <body>
+  <body class="planets">
      {{> header}}
       {{> nav}}
-    <main>
-      <article class="planet-content">
+    <main class="planet-content">
+      <article>
         <section>
           <h1 class="planet-title">Saturn</h1>
           <div class="planet-content-image-wrap">
@@ -217,6 +216,6 @@
       </div>
     </main>
     {{> footer}}
-    {{> script}}
+    
   </body>
 </html>

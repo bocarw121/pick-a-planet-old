@@ -6,18 +6,18 @@
     <meta name="description" content="nine planets main selection ">
     <meta name="planets" content="Mercury, Venus, Earth, Mars,Jupiter, Saturn, Uranus, Neptune, Pluto">
     <title>Pick A Planet</title>
-    <script src="https://progressier.com/client/script.js?id=hZIXCm6fyATsuNjyaOZm"></script> 
+    {{> favicons}}
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" as="style"
-    onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@300;400;900&display=swap" as="style"
-    onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="stylesheet" href="/public/css/style.css" />
-    <link rel="stylesheet" href="/public/css/index.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" as="style"
+    
+    >
+    <link  href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@300;400;900&display=swap" as="style"
+   >
+    {{> indexStyle}}
   </head>
-  <body>
+  <body class="index">
   {{> header}}
-   {{> nav}}
+   {{> nav}} 
     <main>
        <div class="main-title">
       <h1>
@@ -74,7 +74,6 @@
     </div>
     </main>
     {{> footer}}
-    {{> script}}
-    {{> script}}
+    
   </body>
 </html>

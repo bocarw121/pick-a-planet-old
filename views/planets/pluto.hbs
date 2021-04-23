@@ -7,16 +7,14 @@
     <meta name="keywords" content="Pluto, Pluto orbit, Pluto description, Pluto project information,">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pluto</title>
-    <script src="https://progressier.com/client/script.js?id=hZIXCm6fyATsuNjyaOZm"></script>  
-    <link rel="stylesheet" href="/public/css/style.css" />
-    <link rel="stylesheet" href="/public/css/planets-style.css" />
-
+    {{> favicons}}
+    {{> planetStyle}}
   </head>
-  <body>
+  <body class="planets">
      {{> header}}
       {{> nav}}
-    <main>
-      <article class="planet-content">
+    <main class="planet-content">
+      <article>
         <section>
           <h1 class="planet-title">
             Pluto
@@ -242,6 +240,6 @@
       </div>
     </main>
     {{> footer}}
-    {{> script}}
+    
   </body>
 </html>

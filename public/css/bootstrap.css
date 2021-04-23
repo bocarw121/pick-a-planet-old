@@ -907,6 +907,10 @@ fieldset:disabled a.btn {
   margin-bottom: 4rem !important;
 }
 
+.mb-10 {
+  margin-bottom: 8rem !important;
+}
+
 .mt-5 {
   margin-top: 3rem !important;
 }
