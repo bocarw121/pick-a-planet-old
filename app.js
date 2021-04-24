@@ -1,52 +1,50 @@
 const express = require("express");
 const hbs = require("hbs");
 const path = require("path");
-const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
-// const enforce = require("express-sslify");
-
-// loading .env file content into processenv
-dotenv.config({ path: "./.env" });
+const enforce = require("express-sslify");
+const { port } = require("./util/config");
 
 const app = express();
-
-// a load balancer (e.g. Heroku). See further comments below
-// app.use(
-//   enforce.HTTPS({
-//     trustProtoHeader: true,
-//   })
-// );
-
-// database connection
 const db = require("./util/database");
+const PORT = port || 8080;
+const publicDirectory = path.join(__dirname, "./public");
+const mainDirectory = path.join(__dirname, "./");
 
-hbs.registerPartials(path.join(__dirname, "./views/partials"));
+if (process.env.NODE_ENV === "development") {
+  app.get("*", (req, res, next) => {
+    res.locals.development = true;
+    next();
+  });
+}
 
-// for css, hbs and js files in the front end
+// Parse JSON bodies (as sent by API clients)
+app.use(express.json());
+
+// Parse URL-encoded bodies (as sent by HTML forms)
+app.use(express.urlencoded({ extended: false }));
+
+app.use(express.static(mainDirectory));
+app.use(express.static(publicDirectory));
+
+// initialize cookie parser
+app.use(cookieParser());
+// handlebars html uses views folder and .hbs extensions
+app.set("view engine", "hbs");
+
+// Setting view directories
 app.set("views", [
-  path.join(__dirname, "./"),
   path.join(__dirname, "./views"),
   path.join(__dirname, "./views/planets"),
   path.join(__dirname, "./views/members-area"),
 ]);
 
-const publicDirectory = path.join(__dirname, "./public");
-const mainDirectory = path.join(__dirname, "./");
+hbs.registerPartials(path.join(__dirname, "./views/partials"));
 
-app.use(express.static(mainDirectory));
-app.use(express.static(publicDirectory));
-
-// handlebars html uses views folder and .hbs extensions
-app.set("view engine", "hbs");
-
-// Parse URL-encoded bodies (as sent by HTML forms)
-app.use(express.urlencoded({ extended: false }));
-
-// Parse JSON bodies (as sent by API clients)
-app.use(express.json());
-
-// initialize cookie parser
-app.use(cookieParser());
+//Define Routes coming from /routes/pages
+app.use("/", require("./routes/pages"));
+app.use("/auth", require("./routes/auth"));
+app.use("/planets", require("./routes/planets"));
 
 // Connects to the mysql database
 db.connect((error) => {
@@ -57,12 +55,14 @@ db.connect((error) => {
   }
 });
 
-//Define Routes coming from /routes/pages
-app.use("/", require("./routes/pages"));
-app.use("/auth", require("./routes/auth"));
-app.use("/planets", require("./routes/planets"));
-
-const PORT = process.env.PORT || 4000;
+if (process.env.NODE_ENV === "production") {
+  // a load balancer (e.g. Heroku). See further comments below
+  app.use(
+    enforce.HTTPS({
+      trustProtoHeader: true,
+    })
+  );
+}
 
 app.listen(PORT, () => {
   console.log(`Your server is listening on port ${PORT}`);

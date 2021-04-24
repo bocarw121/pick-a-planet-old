@@ -1,8 +1,12 @@
 node_modules
 
+# Development
 .env
+
+# Production
+/dist
+gulpfile.js
 .htaccess
-site.webmanifest
 sitemap.xml
-sources.html
+
 
