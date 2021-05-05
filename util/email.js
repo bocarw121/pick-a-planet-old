@@ -1,13 +1,61 @@
-const nodemailer = require("nodemailer");
-const sendgridTransport = require("nodemailer-sendgrid-transport");
-const { nodemailerKey } = require("../util/config");
+const { sendgrid } = require("../util/config");
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey(sendgrid);
 
-const transporter = nodemailer.createTransport(
-  sendgridTransport({
-    auth: {
-      api_key: nodemailerKey,
-    },
-  })
-);
+const send = (message) => {
+  sgMail
+    .send(message)
+    .then((response) => {
+      console.log(response[0].statusCode);
+      console.log(response[0].headers);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
 
-module.exports = transporter;
+const sendContactMail = (name, email) => {
+  const emailContent = `<h3>Welcome to Planets. Thanks for signing up to the member's area. You can enjoy exclusive videos and learn more about the cool planets that surround us</h3>
+`;
+  const msg = {
+    to: email,
+    from: "bocaralhassanwane@gmail.com",
+    subject: `You got a message on nine planets from Email: ${email}`,
+    html: `<h4>Hey, ${name}</h4> <br> ${emailContent}`,
+  };
+
+  send(msg);
+};
+
+//TODO:
+const sendResetEmail = (email, update) => {
+  const msg = {
+    to: email,
+    from: "bocaralhassanwane@gmail.com",
+    subject: "Pasword request",
+    html: `<h3>Here is your temporary password you can click to login and reset your password</h3>
+    <a href="localhost:3000/changepassword">here</a> 
+     <p>${update}</p>`,
+  };
+
+  send(msg);
+};
+
+const sendRegistrationConfirmationEmail = (email, firstName) => {
+  const msg = {
+    to: email,
+    from: "bocaralhassanwane@gmail.com",
+    subject: "Thanks for signing up",
+    html: `<h3>Welcome to nine planets</h3>
+           <p>Hey ${firstName},</p>
+           <p>Thanks for signing up to the members area. You can enjoy exclusive videos and learn more about the cool planets that surround us.</p>`,
+  };
+
+  send(msg);
+};
+
+module.exports = {
+  sendContactMail,
+  sendResetEmail,
+  sendRegistrationConfirmationEmail,
+};
