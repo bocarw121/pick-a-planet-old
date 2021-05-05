@@ -20,7 +20,7 @@
                 <h1>Contact us</h1>
               </div>
               <div class="card-body">
-                <form action="/auth/contact" method="POST">
+                <form action="/contact" method="POST" >
                   <div class="form-group">
                     <label for="name">Name</label>
                     <input
@@ -45,7 +45,7 @@
                     </label>
                     <textarea
                       class="form-control"
-                      id="exampleFormControlTextarea1"
+                      id="contact-text-area"
                       rows="6"
                       name="text"
                     ></textarea>
@@ -56,11 +56,14 @@
               {{#if message}}
               <h4 class="alert alert-danger mt-4">{{message}}</h4>
               {{/if}}
+              {{#if complete}}
+              <h4 class="alert alert-success mt-4">{{complete}}</h4>
+              {{/if}}
             </div>
           </div>
         </div>
       </div>
-     {{> footer}}
+    {{footer}}
     </body>
   </html>
 </html>

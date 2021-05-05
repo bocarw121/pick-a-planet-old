@@ -1,7 +1,8 @@
-const db = require("../util/database");
+const {db} = require("../../../util/database");
 const { promisify } = require("util");
-const { JWT } = require("../util/config");
+const { JWT } = require("../../../util/config");
 const jwt = require("jsonwebtoken");
+
 // isLogged in
 const isLoggedIn = async (req, res, next) => {
   const { JWT_PRIVATE } = JWT;
@@ -30,6 +31,13 @@ const isLoggedIn = async (req, res, next) => {
   }
 };
 
+const user = (req, res, next) => {
+  res.locals.user = req.user;
+  console.log(res.locals.user);
+  next();
+};
+
 module.exports = {
   isLoggedIn,
+  user,
 };

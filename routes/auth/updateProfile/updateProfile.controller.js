@@ -1,10 +1,24 @@
 // Update password
-const updatePassword = (jwt, promisify, argon2, db, JWT) => async (
-  req,
+const jwt = require("jsonwebtoken");
+const argon2 = require("argon2");
+const { promisify } = require("util");
+const { JWT } = require("../../../util/config");
+const {db} = require("../../../util/database");
+
+const getUpdatePassword = (req, res) => {
+  if (req.user) {
+    res.render("editpassword");
+  } else {
+    res.redirect("login");
+  }
+};
+
+const updatePassword = async (
+  req, 
   res
 ) => {
-  const { JWT_PRIVATE } = JWT;
   const { password, currentPassword, passwordConfirm } = req.body;
+  const { JWT_PRIVATE } = JWT;
 
   const decoded = await promisify(jwt.verify)(req.cookies.jwt, JWT_PRIVATE);
   if (req.cookies.jwt) {
@@ -20,6 +34,7 @@ const updatePassword = (jwt, promisify, argon2, db, JWT) => async (
             (currentPassword && !password) ||
             (currentPassword && !passwordConfirm)
           ) {
+            
             res.status(400).render("editpassword", {
               message: "You must fill in all fields",
             });
@@ -32,7 +47,7 @@ const updatePassword = (jwt, promisify, argon2, db, JWT) => async (
               message: "New password must be a different password!",
             });
           } else if (password.length < 6 && passwordConfirm.length < 6) {
-            res.status(401).render("editpassword", {
+            res.status(400).render("editpassword", {
               message: "Your password should be at least 6 characters",
             });
           } else if (!(await argon2.verify(results[0].password, password))) {
@@ -66,8 +81,16 @@ const updatePassword = (jwt, promisify, argon2, db, JWT) => async (
   }
 };
 
+const getUpdateEmail = (req, res) => {
+  if (req.user) {
+    res.render("editemail");
+  } else {
+    res.redirect("login");
+  }
+};
+
 // Update email
-const updateEmail = (jwt, promisify, db, JWT) => async (req, res) => {
+const updateEmail = async (req, res) => {
   const { JWT_PRIVATE } = JWT;
   const { email, currentEmail, emailConfirm } = req.body;
 
@@ -123,6 +146,8 @@ const updateEmail = (jwt, promisify, db, JWT) => async (req, res) => {
 };
 
 module.exports = {
+  getUpdatePassword,
   updatePassword,
+  getUpdateEmail,
   updateEmail,
 };

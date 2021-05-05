@@ -1,4 +1,5 @@
 // logout logic
+
 const handleLogout = async (req, res) => {
   // removes cookie if it exists
   try {

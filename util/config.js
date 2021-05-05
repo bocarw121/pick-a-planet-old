@@ -14,5 +14,5 @@ module.exports = {
     JWT_COOKIE_EXPIRES: process.env.JWT_COOKIE_EXPIRES,
   },
   port: process.env.PORT,
-  nodemailerKey: process.env.NODEMAILER_KEY,
+  sendgrid: process.env.SENDGRID,
 };
