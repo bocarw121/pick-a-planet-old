@@ -2,16 +2,14 @@ const { sendgrid } = require("../util/config");
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(sendgrid);
 
-const send = (message) => {
-  sgMail
-    .send(message)
-    .then((response) => {
-      console.log(response[0].statusCode);
-      console.log(response[0].headers);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+const send = async (message) => {
+  const sendMessage = await sgMail.send(message);
+  const status = await sendMessage[0].statusCode;
+  if (status !== 202) {
+    throw new Error("Unable to send message");
+  } else {
+    return sendMessage;
+  }
 };
 
 const sendContactMail = (name, email) => {
@@ -24,7 +22,7 @@ const sendContactMail = (name, email) => {
     html: `<h4>Hey, ${name}</h4> <br> ${emailContent}`,
   };
 
-  send(msg);
+  return send(msg);
 };
 
 //TODO:
@@ -38,7 +36,7 @@ const sendResetEmail = (email, update) => {
      <p>${update}</p>`,
   };
 
-  send(msg);
+ return send(msg);
 };
 
 const sendRegistrationConfirmationEmail = (email, firstName) => {
@@ -51,7 +49,7 @@ const sendRegistrationConfirmationEmail = (email, firstName) => {
            <p>Thanks for signing up to the members area. You can enjoy exclusive videos and learn more about the cool planets that surround us.</p>`,
   };
 
-  send(msg);
+ return send(msg);
 };
 
 module.exports = {
