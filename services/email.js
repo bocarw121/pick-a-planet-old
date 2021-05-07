@@ -1,4 +1,4 @@
-const { sendgrid } = require("../util/config");
+const { sendgrid } = require("../services/config");
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(sendgrid);
 
@@ -36,7 +36,7 @@ const sendResetEmail = (email, update) => {
      <p>${update}</p>`,
   };
 
- return send(msg);
+  return send(msg);
 };
 
 const sendRegistrationConfirmationEmail = (email, firstName) => {
@@ -49,7 +49,7 @@ const sendRegistrationConfirmationEmail = (email, firstName) => {
            <p>Thanks for signing up to the members area. You can enjoy exclusive videos and learn more about the cool planets that surround us.</p>`,
   };
 
- return send(msg);
+  return send(msg);
 };
 
 module.exports = {

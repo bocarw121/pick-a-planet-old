@@ -1,8 +1,9 @@
 const http = require("http");
 const enforce = require("express-sslify");
 
+const { connectDatabase } = require("./services/database");
+
 const app = require("./app");
-const { connectDatabase } = require("./util/database");
 
 const PORT = process.env.PORT || 3000;
 
