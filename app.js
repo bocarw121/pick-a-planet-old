@@ -4,6 +4,10 @@ const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const hbs = require("hbs");
 
+const {
+  isLoggedIn,
+  user,
+} = require("./routes/auth/isLoggedIn/isLoggedIn.controller");
 const router = require("./routes/routers");
 
 const authRouter = require("./routes/auth/auth.routers");
@@ -39,7 +43,7 @@ if (process.env.NODE_ENV === "development") {
   });
 }
 
-app.use("/", router);
-app.use('/', authRouter)
+app.use("/", isLoggedIn, user, router);
+app.use("/", authRouter);
 
 module.exports = app;

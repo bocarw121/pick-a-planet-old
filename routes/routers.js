@@ -1,7 +1,5 @@
 const express = require("express");
 
-const { isLoggedIn, user } = require("./auth/isLoggedIn/isLoggedIn.controller");
-
 // All the routes combined
 
 const indexRouter = require("./main/index.router");
@@ -13,7 +11,7 @@ const sourcesRouter = require("./main/sources.router");
 
 const router = express.Router();
 
-router.get("/*", isLoggedIn, user);
+
 
 router.use("/", indexRouter);
 router.use("/profile", profileRouter);

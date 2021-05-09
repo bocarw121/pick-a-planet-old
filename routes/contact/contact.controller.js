@@ -1,4 +1,4 @@
-const { sendContactMail } = require("../../util/email");
+const { sendContactMail } = require("../../services/email");
 
 const contactPage = (req, res) => {
   res.render("contact");
@@ -16,7 +16,6 @@ const handleContact = (req, res) => {
   sendContactMail(name, email);
 
   res.status(200).render("contact", {
-    // TODO: Add a better message
     complete: "Your email has been sent",
   });
 };

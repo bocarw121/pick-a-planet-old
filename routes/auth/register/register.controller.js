@@ -1,13 +1,14 @@
-const { db } = require("../../../util/database");
-const argon2 = require("argon2");
-const { sendRegistrationConfirmationEmail } = require("../../../util/email");
+const { addUser, checkIfUserExists } = require("../../../models/user.model");
 
-//  register logic
+const {
+  sendRegistrationConfirmationEmail,
+} = require("../../../services/email.js");
+
 const getRegistration = (req, res) => {
   res.render("register");
 };
 
-const validateRegistration = (req, res, next) => {
+const validateRegistrationForm = (req, res, next) => {
   const { firstName, lastName, email, password, passwordConfirm } = req.body;
 
   if (!password || !email || !firstName || !lastName) {
@@ -23,56 +24,49 @@ const validateRegistration = (req, res, next) => {
       message: "Passwords do not match",
     });
   }
+  next();
+};
 
-  const sql = "SELECT email FROM users WHERE email = ?";
-  db.query(sql, [email], (error, results) => {
-    if (error) throw error;
-    // Checks if email exists
-    if (results.length > 0) {
+const userCheck = (req, res, next) => {
+  const { email } = req.body;
+
+  checkIfUserExists(email, (err, results, userNew) => {
+    if (err) {
+      return res.status(400).render("register", {
+        message: "Unable to register at the moment",
+      });
+    }
+    if (results.id) {
       return res.status(401).render("register", {
         message: `${email} has already been registered`,
       });
-    } else {
+    } else if (userNew.newUser) {
       next();
     }
   });
 };
 
-const handleRegistration = async (req, res) => {
-  const { firstName, lastName, email, password } = req.body;
-  /*
-  Check authValidators for error handling.
-  Email does exist and user registration is a success 
-  */
-  try {
-    let encryptedPassword = await argon2.hash(password);
+const handleRegistration = async (req, res, next) => {
+  const { firstName, email } = req.body;
 
-    const sql = "INSERT INTO users SET ?";
-    const values = {
-      firstName,
-      lastName,
-      email,
-      password: encryptedPassword,
-    };
-    db.query(sql, values, (error, results) => {
-      if (error) {
-        throw error;
-      } else {
-        // Sends Welcome email to user
-
-        sendRegistrationConfirmationEmail(email, firstName);
-        return res.render("register", {
-          complete: "User Registered",
-        });
-      }
-    });
-  } catch (error) {
-    throw error;
-  }
+  addUser(req.body, (dbError) => {
+    if (dbError) {
+      return res.status(400).render("register", {
+        message: "Unable to register at the moment",
+      });
+    } else {
+      sendRegistrationConfirmationEmail(email, firstName);
+      return res.status(201).render("register", {
+        complete: "User Registered",
+      });
+    }
+  });
 };
 
 module.exports = {
   getRegistration,
-  validateRegistration,
+  userCheck,
+  validateRegistrationForm,
+  checkIfUserExists,
   handleRegistration,
 };

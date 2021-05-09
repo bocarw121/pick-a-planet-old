@@ -1,39 +1,28 @@
-const {db} = require("../../../util/database");
-const { promisify } = require("util");
-const { JWT } = require("../../../util/config");
-const jwt = require("jsonwebtoken");
+const { getUserById } = require("../../../models/user.model");
+const { verifyToken } = require("../../../services/security");
 
 // isLogged in
 const isLoggedIn = async (req, res, next) => {
-  const { JWT_PRIVATE } = JWT;
-  if (req.cookies.jwt) {
-    try {
-      // verifies token to locate user id. -- returns an object with user id
-      const decoded = await promisify(jwt.verify)(req.cookies.jwt, JWT_PRIVATE);
+  if (req.cookies.userId) {
+    // verifies token to locate user id. -- returns an object with user id
+    const decoded = await verifyToken(req);
 
-      // check if user still exists
-      const sql = "SELECT * FROM users WHERE id = ?";
+    // check if user still exists
 
-      db.query(sql, [decoded.id], (error, results) => {
-        if (!results) {
-          return next();
-        }
-
-        req.user = results[0];
+    getUserById(decoded, (user) => {
+      if (user.id) {
+        req.user = user;
         return next();
-      });
-    } catch (error) {
-      throw error;
-      return next();
-    }
+      }
+    });
   } else {
     return next();
   }
 };
 
 const user = (req, res, next) => {
+  //TODO:
   res.locals.user = req.user;
-  console.log(res.locals.user);
   next();
 };
 

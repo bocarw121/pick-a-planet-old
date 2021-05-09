@@ -1,38 +1,52 @@
-const argon2 = require("argon2");
-const reset = require("../../../util/function");
-const {db} = require("../../../util/database");
-
-const { sendResetEmail } = require("../../../util/email");
-
+const {
+  checkIfUserExists,
+  updateUserPasswordByEmail,
+} = require("../../../models/user.model");
+const { sendResetEmail } = require("../../../services/email");
 
 const getPasswordReset = (req, res) => {
   res.render("resetpassword");
 };
 
-const resetPassword =  async (req, res) => {
+const resetPassword = async (req, res) => {
   // selects inputed email from database
-
   const { email } = req.body;
-  const sql = "SELECT * FROM users WHERE email = ?";
-  db.query(sql, [email], async (error, results) => {
-    if (results.length === 0) {
-      res.status(404).render("resetpassword", {
+
+  if (!email) {
+    return res.status(401).render("resetpassword", {
+      message: "Please enter your email to reset your password",
+    });
+  }
+
+  checkIfUserExists(email, async (err, userExits, noUser) => {
+    // Database Error
+    if (err.db) {
+      return res.render("resetpassword", {
+        message: "Unable to reset your password at the moment",
+      });
+    }
+    if (noUser) {
+      return res.status(401).render("resetpassword", {
         message: "The email you entered doesn't match the one on file",
       });
-    } else {
-      // Once email is matched with the database results a query is set to update the password
-      const sql = "UPDATE users SET password = ? WHERE email = ?";
-      // randomly generate password
-      const update = reset();
-      let encryptedPassword = await argon2.hash(update);
-      db.query(sql, [encryptedPassword, email], (error, results) => {
-        if (error) throw error;
+    }
+    if (userExits) {
+      updateUserPasswordByEmail(email, (dbError, reset) => {
+        // Database Error
+        if (dbError) {
+          return res.status(400).render("resetpassword", {
+            message: "Unable to reset your password at the moment", //TODO:
+          });
+        }
 
-        // Sends email with the updated password
-      sendResetEmail(email, update)
-      });
-      res.status(404).render("resetpassword", {
-        complete: "Instructions have been sent to your email",
+        if (reset) {
+          // Once email is matched with the database results a query is set to update the password
+          // Sends email with the updated password
+          sendResetEmail(email, reset.update);
+          return res.status(404).render("resetpassword", {
+            complete: "Instructions have been sent to your email",
+          });
+        }
       });
     }
   });
