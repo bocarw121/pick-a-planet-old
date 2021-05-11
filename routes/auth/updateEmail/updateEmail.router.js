@@ -5,17 +5,10 @@ const {
   email,
   updateEmail,
 } = require("./updateEmail.controller");
-const { isLoggedIn } = require("../isLoggedIn/isLoggedIn.controller");
 const updateEmailRouter = express.Router();
 
 updateEmailRouter.get("/", getUpdateEmail);
 
-updateEmailRouter.post(
-  "/",
-  email,
-  isLoggedIn,
-  validateUpdateEmailForm,
-  updateEmail
-);
+updateEmailRouter.post("/", email, validateUpdateEmailForm, updateEmail);
 
 module.exports = updateEmailRouter;

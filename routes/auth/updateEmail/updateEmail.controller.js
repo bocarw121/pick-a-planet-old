@@ -3,7 +3,7 @@ const { verifyToken, removeCookie } = require("../../../services/security");
 
 const getUpdateEmail = (req, res) => {
   if (req.user) {
-    res.render("editemail", {
+    res.render("update-email", {
       email: req.user.email,
     });
   } else {
@@ -22,19 +22,19 @@ const validateUpdateEmailForm = (req, res, next) => {
 
   if (req.cookies.userId) {
     if (!email || !emailConfirm) {
-      return res.status(401).render("editemail", {
+      return res.status(401).render("update-email", {
         message: "You must fill in all fields",
       });
     } else if (!email || !emailConfirm) {
-      return res.status(401).render("editemail", {
+      return res.status(401).render("update-email", {
         message: "Please enter your new email and confirm it!",
       });
     } else if (email !== emailConfirm) {
-      return res.status(401).render("editemail", {
+      return res.status(401).render("update-email", {
         message: "New email doesnt match", //TODO:
       });
     } else if (currentEmail === email) {
-      return res.status(401).render("editemail", {
+      return res.status(401).render("update-email", {
         message: "New email must be different then current", //TODO:
       });
     }
@@ -49,25 +49,19 @@ const updateEmail = async (req, res) => {
   const decoded = await verifyToken(req);
 
   getUserById(decoded, (user) => {
-    if (err) {
+    if (!user) {
       removeCookie(res);
       res.redirect("login");
-    }
-    if (user.email !== currentEmail) {
-      return res.status(401).render("editemail", {
-        message: "The email you entered doesn't match the one on file",
-      });
     }
 
     updateUserEmail(email, decoded, (dbError, result) => {
       if (dbError) {
-        return res.render("editemail", {
+        return res.status(500).render("update-email", {
           message: "Unable to update your email at the moment.",
         });
       }
-
       if (result) {
-        return res.render("editemail", {
+        return res.status(200).render("update-email", {
           complete: "You're email has been updated succesfuly.",
           email,
         });
