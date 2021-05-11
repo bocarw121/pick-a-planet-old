@@ -31,7 +31,7 @@ const userCheck = (req, res, next) => {
   const { email } = req.body;
 
   checkIfUserExists(email, (err, results, userNew) => {
-    if (err) {
+    if (err.db) {
       return res.status(400).render("register", {
         message: "Unable to register at the moment",
       });
@@ -46,7 +46,7 @@ const userCheck = (req, res, next) => {
   });
 };
 
-const handleRegistration = async (req, res, next) => {
+const handleRegistration = async (req, res) => {
   const { firstName, email } = req.body;
 
   addUser(req.body, (dbError) => {
@@ -55,7 +55,9 @@ const handleRegistration = async (req, res, next) => {
         message: "Unable to register at the moment",
       });
     } else {
-      sendRegistrationConfirmationEmail(email, firstName);
+      if (process.env.NODE_ENV === "production") {
+        sendRegistrationConfirmationEmail(email, firstName);
+      }
       return res.status(201).render("register", {
         complete: "User Registered",
       });

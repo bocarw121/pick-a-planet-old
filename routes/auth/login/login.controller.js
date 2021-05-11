@@ -12,15 +12,6 @@ const getLogin = (req, res, next) => {
   }
 };
 
-// login and change
-const getLoginAndChangePassword = (req, res) => {
-  if (req.user) {
-    res.render("profile");
-  } else {
-    res.render("loginandchange");
-  }
-};
-
 const handleLogin = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -48,9 +39,9 @@ const handleLogin = async (req, res) => {
 
         // redirects to edit password page in profile
         if (req.url === "/change") {
-          return res.vary("userId").status(200).redirect("../../editpassword");
+          return res.redirect("../../editpassword");
         }
-        return res.status(200).redirect("profile");
+        return res.redirect("profile");
       });
     }
   });
@@ -58,6 +49,5 @@ const handleLogin = async (req, res) => {
 
 module.exports = {
   getLogin,
-  getLoginAndChangePassword,
   handleLogin,
 };

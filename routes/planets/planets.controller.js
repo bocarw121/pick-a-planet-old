@@ -1,4 +1,5 @@
 const planetRoutes = (req, res) => {
+  const firstName = req.user ? req.user.firstName : null;
   const planets = (req.body.planet = [
     "Earth",
     "Jupiter",
@@ -13,7 +14,7 @@ const planetRoutes = (req, res) => {
 
   for (let planet of planets) {
     if (req.url === `/${planet.toLowerCase()}`) {
-      res.render(`${planet.toLowerCase()}`, { planet });
+      res.render(`${planet.toLowerCase()}`, { planet, name: firstName });
     }
   }
 };
