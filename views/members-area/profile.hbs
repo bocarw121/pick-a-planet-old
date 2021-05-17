@@ -1,64 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content="profile">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profile</title>
-    {{> favicons}}
-    {{> memberStyle}}   
-  </head>
-  <body>
-    {{> header}}
-    {{> nav}}
-    <div class="container mt-6 mb-5">
-      <div class="row">
-        <div class="col-12 col-sm-12  col-lg-4 ">
-          <div class="card">
-            <div class="avatar-ctn">
-              <img
-                src="/public/images/profile/avatar.png"
-                class="avatar"
-                alt="user profile picture"
-              />
-            </div>
-            <div class="card-body">
-              <h2 class="card-title text-center">{{user.firstname}}</h2>
-              <p class="card-text mb-3 ">Welcome to your profile page</p>
-              <a href="#" class="btn btn-primary mb-3">{{user.email}}</a>
-              <br />
-              <a href="/editemail">Update email</a>
-              <br />
-              <a href="/editpassword">Update password</a>
-            </div>
-          </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content="profile">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile</title>
+  {{> favicons}}
+  {{> memberStyle}}
+</head>
+
+<body>
+  {{> header}}
+  {{> nav}}
+  <div class="container mt-6 mb-5">
+    <div class="col-lg-12 mb-6">
+      <div class="card text-center">
+        <div class="card-header">
+          <h1>Welcome to the members area {{user.firstname}}! </h1>
         </div>
-        <div class="col-12 col-sm-12  col-lg-8">
-          <div class="card text-center">
-            <div class="card-header">
-              <h2>Welcome {{user.firstname}} to the members area</h2>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">Hey, {{user.firstname}} welcome back</h5>
-             
-            </div>
-            <div class="card-footer text-muted"></div>
-          </div>
-        </div>
-      </div>
-      {{!-- Add video content --}}
-      <div class="video-content col-12 mt-5">
-        <div class="planet-video earth"></div>
-        <div class="planet-video jupiter"></div>
-        <div class="planet-video mars"></div>
-        <div class="planet-video mercury"></div>
-        <div class="planet-video neptune"></div>
-        <div class="planet-video pluto"></div>
-        <div class="planet-video saturn"></div>
-        <div class="planet-video uranus"></div>
-        <div class="planet-video venus"></div>
+        <div class="card-footer text-muted text text-danger"></div>
       </div>
     </div>
-    {{> footer}}
-  </body>
+    <div class="row">
+      <div class=" col-md-10 col-lg-4">
+        <div class="card mx-auto mb-5 auto">
+          <div class="avatar-ctn ">
+            <img src="/public/images/profile/avatar.png" class="avatar" alt="user profile picture" />
+          </div>
+          <div class="card-body">
+            <h2 class="card-title text-center">{{user.firstname}}</h2>
+            <p class="card-text mb-3">Welcome to your profile page</p>
+            <a href="#" class="btn btn-primary mb-3">{{user.email}}</a>
+            <br />
+            <a href="/update-email">Update email</a>
+            <br />
+            <a href="/update-password">Update password</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{!-- Add video content --}}
+    <div class="container video-content col-12 mt-5">
+      <div class="card planet-video earth"></div>
+      <div class="card planet-video jupiter"></div>
+      <div class="card planet-video mars"></div>
+      <div class="card planet-video mercury"></div>
+      <div class="card planet-video neptune"></div>
+      <div class="card planet-video pluto"></div>
+      <div class="card planet-video saturn"></div>
+      <div class="card planet-video uranus"></div>
+      <div class="card planet-video venus"></div>
+    </div>
+  </div>
+  {{> footer}}
+</body>
+
 </html>

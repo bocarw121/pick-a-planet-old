@@ -13,11 +13,8 @@ body.index {
   width: 80%;
   margin: 40px auto;
   padding: 20px;
-  border: 1px solid white;
   height: fit-content;
   color: var(--color-light);
-  background-color: hsla(0, 0%, 0%, 0.3);
-  line-height: 1.5;
 }
 
 .main-title h1 {
@@ -27,17 +24,19 @@ body.index {
 }
 
 .main-title p {
+  line-height: 1.4;
   font-size: 1.4rem;
   width: 80%;
   font-family: var(--lato);
   margin-bottom: 20px;
+  margin-top: 30px;
 }
 
 .planet-display-container {
   width: 80%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(23.75rem, 1fr));
-  margin: 50px auto;
+  margin: 20px auto 80px;
   grid-row-gap: 80px;
   grid-column-gap: 40px;
   z-index: 100;

@@ -129,7 +129,8 @@ nav {
 
 
 .nav-planet-list {
-  visibility: hidden;
+  display: none;
+  /* visibility: hidden; */
   opacity: 0;
   position: absolute;
   top: 100%;
@@ -160,7 +161,7 @@ nav {
 .main-nav-link:focus .nav-planet-list,
 .main-nav-link:focus-within .nav-planet-list,
 .main-nav-link:hover .nav-planet-list {
-  visibility: visible;
+  display: block;
   opacity: 1;
   z-index: 1;
   transform: translateY(0);
@@ -226,6 +227,7 @@ footer a:hover {
   background-color: hsl(221, 77%, 62%);
   text-align: center;
 }
+
 
 .avatar {
   width: 65%;
