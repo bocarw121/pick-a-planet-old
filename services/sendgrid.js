@@ -1,6 +1,6 @@
-const { sendgrid } = require("../services/config");
+const { SENDGRID_API_KEY, ADMIN_EMAIL } = require("../utils/config");
 const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey(sendgrid);
+sgMail.setApiKey(SENDGRID_API_KEY);
 
 const send = async (message) => {
   const sendMessage = await sgMail.send(message);
@@ -17,7 +17,7 @@ const sendContactMail = (name, email) => {
 `;
   const msg = {
     to: email,
-    from: "bocaralhassanwane@gmail.com",
+    from: adminEmail,
     subject: `You got a message on nine planets from Email: ${email}`,
     html: `<h4>Hey, ${name}</h4> <br> ${emailContent}`,
   };
@@ -29,10 +29,9 @@ const sendContactMail = (name, email) => {
 const sendResetEmail = (email, update) => {
   const msg = {
     to: email,
-    from: "bocaralhassanwane@gmail.com",
+    from: ADMIN_EMAIL,
     subject: "Pasword request",
-    html: `<h3>Here is your temporary password you can click to login and reset your password</h3>
-    <a href="localhost:3000/changepassword">here</a> 
+    html: `<h3>Here is your temporary password/h3>
      <p>${update}</p>`,
   };
 
@@ -42,7 +41,7 @@ const sendResetEmail = (email, update) => {
 const sendRegistrationConfirmationEmail = (email, firstName) => {
   const msg = {
     to: email,
-    from: "bocaralhassanwane@gmail.com",
+    from: adminEmail,
     subject: "Thanks for signing up",
     html: `<h3>Welcome to nine planets</h3>
            <p>Hey ${firstName},</p>

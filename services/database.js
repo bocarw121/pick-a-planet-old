@@ -1,12 +1,32 @@
 const mySql = require("mysql");
-const { database } = require("../services/config");
 
-const db = mySql.createConnection({
-  host: database.host,
-  user: database.user,
-  password: database.password,
-  database: database.database,
-});
+const {
+  DATABASE,
+  TEST_DATABASE,
+  DEV_DATABASE,
+  NODE_ENV,
+} = require("../utils/config");
+
+let config = {};
+
+if (NODE_ENV === "production") {
+  config = {
+    ...DATABASE,
+  };
+}
+if (NODE_ENV === "development") {
+  config = {
+    ...DEV_DATABASE,
+  };
+}
+
+if (NODE_ENV === "test") {
+  config = {
+    ...TEST_DATABASE,
+  };
+}
+
+const db = mySql.createConnection(config);
 
 const connectDatabase = () => {
   db.connect((error) => {
@@ -18,7 +38,16 @@ const connectDatabase = () => {
   });
 };
 
+const disconnectDatabase = () => {
+  db.end((error) => {
+    if (error) {
+      console.log(error.message);
+    }
+  });
+};
+
 module.exports = {
   db,
   connectDatabase,
+  disconnectDatabase,
 };
