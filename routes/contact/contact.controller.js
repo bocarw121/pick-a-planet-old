@@ -1,4 +1,5 @@
-const { sendContactMail } = require("../../services/email");
+const { sendContactMail } = require("../../services/sendgrid");
+const { NODE_ENV } = require("../../utils/config");
 
 const contactPage = (req, res) => {
   res.render("contact");
@@ -12,7 +13,7 @@ const handleContact = async (req, res) => {
       message: "You must fill in all the fields",
     });
   }
-  if (process.env.NODE_ENV === "production") {
+  if (NODE_ENV === "production") {
     sendContactMail(name, email);
   }
 
