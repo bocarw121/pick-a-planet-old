@@ -1,29 +1,30 @@
 const { db } = require("../services/database");
 const { verifyPassword, setPassword } = require("../services/security");
-const reset = require("../services/reset");
+const reset = require("../utils/reset");
+const capitalize = require("../utils/functions");
 
 const checkIfUserExists = (email, result) => {
   db.query("SELECT email FROM users WHERE email = ?", [email], (error, res) => {
     if (error) {
       return result({ db: error }, null);
     }
-    if (res.length > 0) {
-      return result({ db: null }, { id: res.length });
-    }
- 
 
-    return result({ db: null }, { id: res.length }, { newUser: true });
+    if (res.length > 0) {
+      return result({ db: null }, { id: res.length }, null);
+    }
+    return result({ db: null }, { id: null }, { newUser: true });
   });
 };
 
 const addUser = async (user, result) => {
   const { firstName, lastName, email, password } = user;
   const newUser = {
-    firstName,
+    firstName: capitalize(firstName),
     lastName,
     email,
     password: await setPassword(password),
   };
+
   db.query("INSERT INTO users SET ?", newUser, (error, res) => {
     if (error) {
       result(error, null);
@@ -42,7 +43,8 @@ const getUser = (email, password, result) => {
         // send error message
         result(error, null, null);
       }
-      // checks to see if results is empty if results is empty no user identified and password attempt fails
+
+     
       else if (res.length == 0 || !(await verifyPassword(res, password))) {
         result(null, { invalidInfo: true }, null);
       } // successful login
@@ -126,8 +128,6 @@ const updateUserPasswordByEmail = async (email, result) => {
       if (error) {
         return result(error, null);
       }
-    
-
       result(null, { reset: res.affectedRows, update });
     }
   );

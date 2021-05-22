@@ -1,8 +1,12 @@
+const { NODE_ENV } = require("../../../utils/config");
+
 const { addUser, checkIfUserExists } = require("../../../models/user.model");
 
 const {
   sendRegistrationConfirmationEmail,
-} = require("../../../services/email.js");
+} = require("../../../services/sendgrid.js");
+
+
 
 const getRegistration = (req, res) => {
   res.render("register");
@@ -55,7 +59,7 @@ const handleRegistration = async (req, res) => {
         message: "Unable to register at the moment",
       });
     } else {
-      if (process.env.NODE_ENV === "production") {
+      if (NODE_ENV === "production") {
         sendRegistrationConfirmationEmail(email, firstName);
       }
       return res.status(201).render("register", {
