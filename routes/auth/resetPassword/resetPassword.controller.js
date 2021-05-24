@@ -1,8 +1,9 @@
+const { NODE_ENV } = require("../../../utils/config");
 const {
   checkIfUserExists,
   updateUserPasswordByEmail,
 } = require("../../../models/user.model");
-const { sendResetEmail } = require("../../../services/email");
+const { sendResetEmail } = require("../../../services/sendgrid");
 
 const getPasswordReset = (req, res) => {
   res.render("reset-password");
@@ -41,7 +42,7 @@ const resetPassword = async (req, res) => {
 
         if (reset) {
           // Sends email with the updated password
-          if (process.env.NODE_ENV === "production") {
+          if (NODE_ENV === "production") {
             sendResetEmail(email, reset.update);
           }
           return res.status(200).render("reset-password", {
