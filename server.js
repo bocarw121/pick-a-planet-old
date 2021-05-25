@@ -1,23 +1,18 @@
 const http = require("http");
-const enforce = require("express-sslify");
-
-const { connectDatabase } = require("./services/database");
 
 const app = require("./app");
 
-const PORT = process.env.PORT || 3000;
+const { ENV_PORT, NODE_ENV } = require("./utils/config");
 
-connectDatabase();
+const { enforceHttps } = require("./middlewares/express-sslify.middleware");
 
 const server = http.createServer(app);
 
-if (process.env.NODE_ENV === "production") {
-  app.use(
-    enforce.HTTPS({
-      trustProtoHeader: true,
-    })
-  );
+if (NODE_ENV === "production") {
+  app.use(enforceHttps);
 }
+const PORT = ENV_PORT || 3000
+
 
 server.listen(PORT, () => {
   console.log(`Your server is listening on port ${PORT}`);
