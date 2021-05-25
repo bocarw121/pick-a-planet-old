@@ -17,7 +17,7 @@ const sendContactMail = (name, email) => {
 `;
   const msg = {
     to: email,
-    from: adminEmail,
+    from: ADMIN_EMAIL,
     subject: `You got a message on nine planets from Email: ${email}`,
     html: `<h4>Hey, ${name}</h4> <br> ${emailContent}`,
   };
@@ -25,7 +25,6 @@ const sendContactMail = (name, email) => {
   return send(msg);
 };
 
-//TODO:
 const sendResetEmail = (email, update) => {
   const msg = {
     to: email,
@@ -41,7 +40,7 @@ const sendResetEmail = (email, update) => {
 const sendRegistrationConfirmationEmail = (email, firstName) => {
   const msg = {
     to: email,
-    from: adminEmail,
+    from: ADMIN_EMAIL,
     subject: "Thanks for signing up",
     html: `<h3>Welcome to nine planets</h3>
            <p>Hey ${firstName},</p>
