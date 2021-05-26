@@ -2,11 +2,8 @@ node_modules
 
 # Development
 .env
+/logs
 
 # Production
-/dist
-gulpfile.js
-.htaccess
+
 sitemap.xml
-
-
