@@ -1,0 +1,83 @@
+name: Deploy
+env:
+  DATABASE_HOST_TEST: ${{ secrets.DATABASE_HOST_TEST }}
+  DATABASE_TEST: ${{ secrets.DATABASE_TEST }}
+  DATABASE_USER_TEST: ${{ secrets.DATABASE_USER_TEST }}
+  DATABASE_PASSWORD_TEST: ${{ secrets.DATABASE_PASSWORD_TEST }}
+  JWT_COOKIE_EXPIRES: ${{ secrets.JWT_COOKIE_EXPIRES }}
+  JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
+  JWT_PRIVATE: ${{ secrets.JWT_PRIVATE }}
+  ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+  SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+on:
+  workflow_run:
+    workflows: ["Test"]
+    types: [completed]
+jobs:
+  deploy-staging:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'development' }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - name: Build for Staging
+        run: npm run build
+
+      - name: Run Tests
+        run: npm test
+
+      - name: Deploy to Heroku Staging
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_STAGING }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          appdir: "dist"
+        env:
+          HD_DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+          HD_DATABASE: ${{ secrets.DATABASE }}
+          HD_DATABASE_USER: ${{ secrets.DATABASE_USER }}
+          HD_DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          HD_JWT_COOKIE_EXPIRES: ${{ secrets.JWT_COOKIE_EXPIRES }}
+          HD_JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
+          HD_JWT_PRIVATE: ${{ secrets.JWT_PRIVATE }}
+          HD_ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          HD_SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+
+  deploy-production:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - name: Build for Production
+        run: npm run build
+
+      - name: Run Tests
+        run: npm test
+
+      - name: Deploy to Heroku Production
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_PRODUCTION }} 
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          appdir: "dist"
+        env:
+          HD_DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+          HD_DATABASE: ${{ secrets.DATABASE }}
+          HD_DATABASE_USER: ${{ secrets.DATABASE_USER }}
+          HD_DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          HD_JWT_COOKIE_EXPIRES: ${{ secrets.JWT_COOKIE_EXPIRES }}
+          HD_JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
+          HD_JWT_PRIVATE: ${{ secrets.JWT_PRIVATE }}
+          HD_ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          HD_SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
