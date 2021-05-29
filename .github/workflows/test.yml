@@ -1,0 +1,49 @@
+name: Test
+on:
+  push:
+    branches: [main, development]
+jobs:
+  Jest:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_HOST_TEST: ${{ secrets.DATABASE_HOST_TEST }}
+      DATABASE_TEST: ${{ secrets.DATABASE_TEST }}
+      DATABASE_USER_TEST: ${{ secrets.DATABASE_USER_TEST }}
+      DATABASE_PASSWORD_TEST: ${{ secrets.DATABASE_PASSWORD_TEST }}
+      JWT_COOKIE_EXPIRES: ${{ secrets.JWT_COOKIE_EXPIRES }}
+      JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
+      JWT_PRIVATE: ${{ secrets.JWT_PRIVATE }}
+      ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+      SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - name: Install Dependencies   
+        run: npm ci
+      
+      - name: Run Tests
+        run: npm test
+
+      - name: Tests ✅
+        if: ${{ success() }}
+        run: |
+          curl --request POST           --url https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.sha }}           --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}'           --header 'content-type: application/json'           --data '{
+            "context": "tests",
+            "state": "success",
+            "description": "Tests passed",
+            "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          }'
+
+      - name: Tests 🚨
+        if: ${{ failure() }}
+        run: |
+          curl --request POST           --url https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.sha }}           --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}'           --header 'content-type: application/json'           --data '{
+            "context": "tests",
+            "state": "failure",
+            "description": "Tests failed",
+            "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          }'
