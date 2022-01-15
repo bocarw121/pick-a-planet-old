@@ -4,14 +4,15 @@
   "description": "pick-a-planet",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "start:dev": "set NODE_ENV=development&&nodemon -r dotenv/config server.js",
-    "start:pro": "set NODE_ENV=production&&nodemon -r dotenv/config server.js",
-    "start:test": "set NODE_ENV=test&&nodemon -r dotenv/config server.js",
+    "start": "pm2 start server.js",
+    "start:dev": "export NODE_ENV=development&&nodemon -r dotenv/config server.js",
+    "start:pro": "export NODE_ENV=production&&nodemon -r dotenv/config server.js",
+    "start:test": "export NODE_ENV=test&&nodemon -r dotenv/config server.js",
     "test": "jest --detectOpenHandles --ci --reporters='default' --reporters='./github-actions-reporter' --forceExit",
     "build": "npm i && gulp",
     "heroku-postbuild": "",
-    "clean": "gulp clean"
+    "clean": "gulp clean",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -35,6 +36,7 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
+    "pm2": "^5.1.2",
     "spdy": "^4.0.2",
     "winston": "^3.3.3"
   },
@@ -49,6 +51,8 @@
     "cssnano": "^5.0.1",
     "del": "^6.0.0",
     "dotenv": "^8.2.0",
+    "eslint": "^8.6.0",
+    "eslint-config-prettier": "^8.3.0",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-concat": "^2.6.1",
@@ -59,17 +63,23 @@
     "gulp-plumber": "^1.2.1",
     "gulp-postcss": "^9.0.0",
     "gulp-rename": "^2.0.0",
-    "gulp-sass": "^4.1.0",
     "gulp-sourcemaps": "^3.0.0",
     "gulp-terser": "^2.0.1",
     "html-loader": "^1.3.2",
+    "husky": "^7.0.4",
     "jest": "^26.6.3",
     "jest-serial-runner": "^1.1.0",
     "jest-stare": "^2.2.2",
+    "lint-staged": "^12.1.7",
     "nodemon": "^2.0.7",
     "postcss": "^8.2.10",
+    "prettier": "^2.5.1",
+    "pretty-quick": "^3.1.3",
     "supertest": "^6.1.3",
     "webpack": "^5.33.2",
     "webpack-cli": "^4.6.0"
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix"
   }
 }

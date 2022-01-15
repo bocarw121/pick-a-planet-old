@@ -10,13 +10,13 @@ const { mainDirectory, views } = require("./utils/paths");
 const { NODE_ENV } = require("./utils/config");
 
 const { isLoggedIn } = require("./middlewares/isLoggedIn.middleware");
+
 const {
   user,
   development,
   production,
 } = require("./middlewares/locals.middleware");
 const { loggers } = require("./middlewares/logger.middleware");
-
 
 const app = express();
 
@@ -26,10 +26,8 @@ app.set("view engine", "hbs");
 
 app.set("views", views);
 
-if (
-  NODE_ENV === "development" ||
-  NODE_ENV === "production"
-) {
+// Use loggers only in development and production
+if (NODE_ENV === "development" || NODE_ENV === "production") {
   app.use(loggers);
 }
 
@@ -41,12 +39,14 @@ app.use(express.static(mainDirectory));
 
 app.use(cookieParser());
 
+// Add local variables to all views in development
 if (NODE_ENV === "development") {
-  app.get("*", development);
+  app.use("*", development);
 }
 
+// Add local variables to all views in production
 if (NODE_ENV === "production") {
-  app.get("*", production);
+  app.use("*", production);
 }
 
 app.use("/", isLoggedIn, user, router);
