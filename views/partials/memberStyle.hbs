@@ -1,20 +1,20 @@
-{{!-- Applies style sheets in development mode --}}
+{{! Applies style sheets in development mode }}
 {{#if development}}
-<link rel='stylesheet' href='/public/css/style.css' />
-<link rel='stylesheet' href='/public/css/bootstrap.css' />
+  <link rel="stylesheet" href="/public/css/style.css" />
+  <link rel="stylesheet" href="/public/css/bootstrap.css" />
 {{/if}}
 
-{{!-- Applies style sheets in production mode --}}
+{{! Applies style sheets in production mode }}
 {{#if production}}
-<link rel='stylesheet' href='/public/css/member-and-contact.css' />
+  <link rel="stylesheet" href="/public/css/member-and-contact.css" />
 {{/if}}
 
-{{!-- Applies style sheet when error message is sent --}}
+{{! Applies style sheet when error message is sent }}
 {{#if message}}
-<link rel='stylesheet' href='/public/css/member-and-contact.css' />
+  <link rel="stylesheet" href="/public/css/member-and-contact.css" />
 {{/if}}
 
-{{!-- Applies style sheet when complete message is sent --}}
+{{! Applies style sheet when complete message is sent }}
 {{#if complete}}
-<link rel='stylesheet' href='/public/css/member-and-contact.css' />
+  <link rel="stylesheet" href="/public/css/member-and-contact.css" />
 {{/if}}

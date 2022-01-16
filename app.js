@@ -3,12 +3,9 @@ const cookieParser = require("cookie-parser");
 
 const router = require("./routes/routers");
 const authRouter = require("./routes/auth/auth.routers");
-
 const { hbsConfig } = require("./services/expressHandlebars");
-
 const { mainDirectory, views } = require("./utils/paths");
 const { NODE_ENV } = require("./utils/config");
-
 const { isLoggedIn } = require("./middlewares/isLoggedIn.middleware");
 
 const {

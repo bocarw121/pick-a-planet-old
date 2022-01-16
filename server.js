@@ -1,9 +1,7 @@
 const http = require("http");
 
 const app = require("./app");
-
 const { ENV_PORT, NODE_ENV } = require("./utils/config");
-
 const { enforceHttps } = require("./middlewares/express-sslify.middleware");
 
 const server = http.createServer(app);

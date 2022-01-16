@@ -4,15 +4,15 @@
   "description": "pick-a-planet",
   "main": "server.js",
   "scripts": {
-    "start": "pm2 start server.js",
+    "start": "pm2-runtime ecosystem.config.js --env production",
     "start:dev": "export NODE_ENV=development&&nodemon -r dotenv/config server.js",
     "start:pro": "export NODE_ENV=production&&nodemon -r dotenv/config server.js",
-    "start:test": "export NODE_ENV=test&&nodemon -r dotenv/config server.js",
     "test": "jest --detectOpenHandles --ci --reporters='default' --reporters='./github-actions-reporter' --forceExit",
     "build": "npm i && gulp",
+    "preinstall": "npm install pm2 -g",
     "heroku-postbuild": "",
     "clean": "gulp clean",
-    "prepare": "husky install"
+    "prepare": "node ./prepare.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
     "@sendgrid/mail": "^7.4.2",
     "argon2": "^0.27.2",
     "cookie-parser": "^1.4.5",
+    "dotenv": "^12.0.3",
     "express": "^4.17.1",
     "express-handlebars": "^5.3.2",
     "express-sslify": "^1.2.0",
@@ -50,7 +51,6 @@
     "autoprefixer": "^10.2.5",
     "cssnano": "^5.0.1",
     "del": "^6.0.0",
-    "dotenv": "^8.2.0",
     "eslint": "^8.6.0",
     "eslint-config-prettier": "^8.3.0",
     "gulp": "^4.0.2",
