@@ -1,6 +1,6 @@
 {
   "name": "Pick A Planet",
-  "short_name": "Pick A Planet",
+  "short_name": "PickAPlanet",
   "icons": [
     {
       "src": "/public/favicon/android-chrome-192x192.png",
@@ -13,7 +13,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": "https://www.pickaplanet.com/",
+  "start_url": "",
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
   "display": "standalone"
