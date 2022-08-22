@@ -8,7 +8,6 @@
 
 - [General info](#general-info)
 - [Technologies](#technologies)
-- [Status](#status)
 
 ---
 
@@ -20,10 +19,7 @@ Pick a planet was created to make it easy for everyone to learn about our planet
 
 ## Technologies
 
-Project is created with:
-
-- Express.js
-
+- JavaScript
 - HTML5
 
 - CSS3
@@ -32,13 +28,13 @@ Project is created with:
 
 - Handlebars
 
-- argon
+- Express js
+
+- Node
+
+- Argon
 
 ---
-
-## Status
-
-In progress
 
 ---
 
