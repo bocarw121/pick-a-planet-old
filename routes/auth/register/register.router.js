@@ -1,21 +1,21 @@
-const express = require("express");
+const express = require('express');
 
 const {
   getRegistration,
   handleRegistration,
   validateRegistrationForm,
   userCheck,
-} = require("./register.controller");
+} = require('./register.controller');
 
 const registerRouter = express.Router();
 
-registerRouter.get("/", getRegistration);
+registerRouter.get('/', getRegistration);
 
 registerRouter.post(
-  "/",
+  '/',
   validateRegistrationForm,
   userCheck,
-  handleRegistration
+  handleRegistration,
 );
 
 module.exports = registerRouter;

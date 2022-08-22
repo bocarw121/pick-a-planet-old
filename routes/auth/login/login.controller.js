@@ -1,35 +1,35 @@
-const { getUser } = require("../../../models/user.model");
-const { setCookie } = require("../../../services/security");
+const { getUser } = require('../../../models/user.model');
+const { setCookie } = require('../../../services/security');
 
 const getLogin = (req, res, next) => {
-  if (req.url === "/change") {
+  if (req.url === '/change') {
     return next();
   }
   if (req.user) {
-    res.redirect("profile");
+    res.redirect('profile');
   } else {
-    res.render("login");
+    res.render('login');
   }
 };
 
 const handleLogin = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    return res.status(401).render("login", {
-      message: "You must provide an email and password",
+    return res.status(401).render('login', {
+      message: 'You must provide an email and password',
     });
   }
 
   getUser(email, password, (dbError, invalidInfo, id) => {
     if (dbError) {
-      return res.status(400).render("login", {
-        message: "Unable to log you in at this time",
+      return res.status(400).render('login', {
+        message: 'Unable to log you in at this time',
       });
     }
 
     if (invalidInfo) {
-      return res.status(401).render("login", {
-        message: "email / password incorrect",
+      return res.status(401).render('login', {
+        message: 'email / password incorrect',
       });
     }
 
@@ -38,10 +38,10 @@ const handleLogin = async (req, res) => {
         res.cookie(cookie, token, cookieSettings);
 
         // redirects to edit password page in profile
-        if (req.url === "/change") {
-          return res.redirect("../../editpassword");
+        if (req.url === '/change') {
+          return res.redirect('../../editpassword');
         }
-        return res.redirect("profile");
+        return res.redirect('profile');
       });
     }
   });

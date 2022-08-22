@@ -1,8 +1,8 @@
-const { db } = require("../../services/database");
-const { addTestUser } = require("../testData/testModel.data");
+const { db } = require('../../services/database');
+const { addTestUser } = require('../testData/testModel.data');
 
 global.loadUser = async (user) => {
-  await addTestUser(user, (err, res) => {
+  await addTestUser(user, (err) => {
     if (err) throw err;
   });
 };
@@ -12,4 +12,3 @@ global.removeUser = (email) => {
     if (err) throw err;
   });
 };
-

@@ -1,4 +1,4 @@
-const enforce = require("express-sslify");
+const enforce = require('express-sslify');
 
 const enforceHttps = enforce.HTTPS({
   trustProtoHeader: true,

@@ -1,7 +1,8 @@
-const { db } = require("../../services/database");
-const { setPassword } = require("../../services/security");
-const capitalize = require("../../utils/functions");
+const { db } = require('../../services/database');
+const { setPassword } = require('../../services/security');
+const capitalize = require('../../utils/functions');
 
+// Db calls for tests
 const addTestUser = async (user, result) => {
   const { firstName, lastName, email, password } = user;
   const newUser = {
@@ -11,7 +12,7 @@ const addTestUser = async (user, result) => {
     password: await setPassword(password),
   };
 
-  db.query("INSERT INTO users SET ?", newUser, (error, res) => {
+  db.query('INSERT INTO users SET ?', newUser, (error, res) => {
     if (error) {
       result(error, null);
       return;

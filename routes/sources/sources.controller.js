@@ -1,5 +1,5 @@
 const getSources = (req, res) => {
-  res.render("sources");
+  res.render('sources');
 };
 
 module.exports = {

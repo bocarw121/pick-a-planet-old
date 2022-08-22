@@ -1,8 +1,8 @@
 const getProfile = (req, res) => {
   if (req.user) {
-    res.render("profile");
+    res.render('profile');
   } else {
-    res.redirect("login");
+    res.redirect('login');
   }
 };
 

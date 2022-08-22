@@ -1,5 +1,5 @@
-const { getUserById } = require("../models/user.model");
-const { verifyToken } = require("../services/security");
+const { getUserById } = require('../models/user.model');
+const { verifyToken } = require('../services/security');
 
 // isLogged in
 const isLoggedIn = async (req, res, next) => {

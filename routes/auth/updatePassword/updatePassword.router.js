@@ -1,15 +1,15 @@
-const express = require("express");
+const express = require('express');
 
 const {
   validatePasswordForm,
   getUpdatePassword,
   updatePassword,
-} = require("./updatePassword.controller");
+} = require('./updatePassword.controller');
 
 const updatePasswordRouter = express.Router();
 
-updatePasswordRouter.get("/", getUpdatePassword);
+updatePasswordRouter.get('/', getUpdatePassword);
 
-updatePasswordRouter.post("/", validatePasswordForm, updatePassword);
+updatePasswordRouter.post('/', validatePasswordForm, updatePassword);
 
 module.exports = updatePasswordRouter;

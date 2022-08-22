@@ -1,11 +1,11 @@
-const path = require("path");
-const hbs = require("express-handlebars");
+const path = require('path');
+const hbs = require('express-handlebars');
 
 const config = {
-  extname: "hbs",
+  extname: 'hbs',
   defaultLayout: false,
-  layoutsDir: path.join(__dirname, "../views"),
-  partialsDir: path.join(__dirname, "../views/partials"),
+  layoutsDir: path.join(__dirname, '../views'),
+  partialsDir: path.join(__dirname, '../views/partials'),
 };
 
 const hbsConfig = hbs(config);

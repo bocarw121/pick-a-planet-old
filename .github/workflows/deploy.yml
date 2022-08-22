@@ -11,7 +11,7 @@ env:
   SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
 on:
   workflow_run:
-    workflows: ["Test"]
+    workflows: ['Test']
     types: [completed]
 jobs:
   deploy-staging:
@@ -36,7 +36,7 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_STAGING }}
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
-          appdir: "dist"
+          appdir: 'dist'
         env:
           HD_DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
           HD_DATABASE: ${{ secrets.DATABASE }}
@@ -70,7 +70,7 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_PRODUCTION }}
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
-          appdir: "dist"
+          appdir: 'dist'
         env:
           HD_DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
           HD_DATABASE: ${{ secrets.DATABASE }}

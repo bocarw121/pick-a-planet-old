@@ -1,4 +1,4 @@
-const { removeCookie } = require("../../../services/security");
+const { removeCookie } = require('../../../services/security');
 
 const handleLogout = async (req, res) => {
   const cookie = req.cookies.userId;
@@ -6,10 +6,10 @@ const handleLogout = async (req, res) => {
   if (cookie) {
     removeCookie(res);
     // keeps user on the same page after logout
-    return res.status(200).redirect("back");
+    return res.status(200).redirect('back');
   }
 
-  return 
+  return;
 };
 
 module.exports = {

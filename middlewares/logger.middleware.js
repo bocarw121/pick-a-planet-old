@@ -1,12 +1,12 @@
-const winston = require("winston");
-const morgan = require("morgan");
+const winston = require('winston');
+const morgan = require('morgan');
 
 const logger = winston.createLogger({
   exitOnError: false,
-  level: "info",
+  level: 'info',
   transports: [
     new winston.transports.Console(),
-    new winston.transports.File({ filename: "./logs/combined.log" }),
+    new winston.transports.File({ filename: './logs/combined.log' }),
   ],
 });
 
@@ -18,7 +18,7 @@ const myStream = {
   },
 };
 
-const loggers = morgan("combined", { stream: myStream });
+const loggers = morgan('combined', { stream: myStream });
 
 module.exports = {
   loggers,

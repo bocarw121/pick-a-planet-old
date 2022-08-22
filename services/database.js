@@ -1,26 +1,26 @@
-const mySql = require("mysql");
+const mySql = require('mysql');
 
 const {
   DATABASE,
   TEST_DATABASE,
   DEV_DATABASE,
   NODE_ENV,
-} = require("../utils/config");
+} = require('../utils/config');
 
 let config = {};
 
-if (NODE_ENV === "production") {
+if (NODE_ENV === 'production') {
   config = {
     ...DATABASE,
   };
 }
-if (NODE_ENV === "development") {
+if (NODE_ENV === 'development') {
   config = {
     ...DEV_DATABASE,
   };
 }
 
-if (NODE_ENV === "test") {
+if (NODE_ENV === 'test') {
   config = {
     ...TEST_DATABASE,
   };
@@ -33,7 +33,7 @@ const connectDatabase = () => {
     if (error) {
       throw error;
     } else {
-      console.log("Connected to the database");
+      console.log('Connected to the database');
     }
   });
 };

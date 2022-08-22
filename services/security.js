@@ -1,7 +1,7 @@
-const { promisify } = require("util");
-const argon2 = require("argon2");
-const jwt = require("jsonwebtoken");
-const { JWT } = require("../utils/config");
+const { promisify } = require('util');
+const argon2 = require('argon2');
+const jwt = require('jsonwebtoken');
+const { JWT } = require('../utils/config');
 
 const { JWT_COOKIE_EXPIRES, JWT_EXPIRES_IN, JWT_PRIVATE } = JWT;
 
@@ -15,7 +15,7 @@ const setCookie = (id, response) => {
     httpOnly: true,
   };
   // Set cookie up in browser
-return response("userId", token, cookieSettings);
+  return response('userId', token, cookieSettings);
 };
 
 const verifyToken = async (req) => {
@@ -23,7 +23,7 @@ const verifyToken = async (req) => {
 };
 
 const removeCookie = (res) => {
-  res.cookie("userId", "", {
+  res.cookie('userId', '', {
     expires: new Date(Date.now() + 2 * 1000),
     httpOnly: true,
   });

@@ -1,4 +1,4 @@
 const capitalize = ([firstLetter, ...restOfWord]) =>
-  `${firstLetter.toUpperCase()}${restOfWord.join("")}`;
+  `${firstLetter.toUpperCase()}${restOfWord.join('')}`;
 
 module.exports = capitalize;

@@ -7,11 +7,11 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 13,
   },
-  extends: ["eslint:recommended"],
+  extends: ['eslint:recommended'],
   rules: {
-    quotes: ["error", "double"],
-    semi: ["error", "always"],
+    quotes: ['error', 'single'],
+    semi: ['error', 'always'],
     // no undef globals allow
-    "no-undef": "off",
+    'no-undef': 'off',
   },
 };

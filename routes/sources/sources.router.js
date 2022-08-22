@@ -1,8 +1,8 @@
-const express = require("express");
-const {  getSources } = require("./sources.controller");
+const express = require('express');
+const { getSources } = require('./sources.controller');
 
 const sourcesRouter = express.Router();
 
-sourcesRouter.get("/", getSources);
+sourcesRouter.get('/', getSources);
 
 module.exports = sourcesRouter;
