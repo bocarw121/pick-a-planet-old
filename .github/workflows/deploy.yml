@@ -1,4 +1,5 @@
 name: Deploy
+# Environment variables are for the tests
 env:
   DATABASE_HOST_TEST: ${{ secrets.DATABASE_HOST_TEST }}
   DATABASE_TEST: ${{ secrets.DATABASE_TEST }}
@@ -38,10 +39,10 @@ jobs:
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
           appdir: 'dist'
         env:
-          HD_DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
-          HD_DATABASE: ${{ secrets.DATABASE }}
-          HD_DATABASE_USER: ${{ secrets.DATABASE_USER }}
-          HD_DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          HD_DATABASE_HOST: ${{ secrets.DATABASE_HOST_STAGING }}
+          HD_DATABASE: ${{ secrets.DATABASE_STAGING }}
+          HD_DATABASE_USER: ${{ secrets.DATABASE_USER_STAGING }}
+          HD_DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD_STAGING }}
           HD_JWT_COOKIE_EXPIRES: ${{ secrets.JWT_COOKIE_EXPIRES }}
           HD_JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
           HD_JWT_PRIVATE: ${{ secrets.JWT_PRIVATE }}
