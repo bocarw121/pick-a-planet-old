@@ -1,9 +1,6 @@
 node_modules
-
-# Development
-.env
+.env*
 /logs
-
-# Production
-
+/scripts
+/docs
 sitemap.xml

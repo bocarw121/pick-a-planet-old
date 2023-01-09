@@ -41,15 +41,7 @@ const imgTask = (done) => {
 };
 
 const jsTask = (done) => {
-  src([
-    jsPath,
-    '!./node_modules/**',
-    '!./gulpfile.js',
-    '!./**/*.test.js',
-    '!./**/__test__*/**/*',
-    '!./github-actions-reporter.js',
-    '!./jest.config.js',
-  ])
+  src([jsPath, '!./node_modules/**', '!./gulpfile.js'])
     .pipe(sourcemaps.init())
     .pipe(terser())
     .pipe(gulpIgnore.exclude('./gulpfile.js'))
