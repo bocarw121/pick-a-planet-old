@@ -18,7 +18,7 @@ const myStream = {
   },
 };
 
-const loggers = morgan('combined', { stream: myStream });
+const loggers = morgan('dev', { stream: myStream });
 
 module.exports = {
   loggers,
