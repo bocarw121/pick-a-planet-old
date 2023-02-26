@@ -1,0 +1,49 @@
+.card-signup {
+  .card-header {
+    .social-line {
+      .btn {
+        color: $white;
+      }
+    }
+  }
+
+  .text-divider {
+    margin-top: $card-signup-divider-margin;
+    margin-bottom: 0;
+    text-align: center;
+  }
+}
+
+.login-page {
+  .card-login {
+    .card-header {
+      margin-top: $card-login-header-margin-top !important;
+      margin-bottom: $card-login-header-margin-bottom;
+    }
+
+    .social-line {
+      padding: 0;
+      margin-top: $card-login-social-margin;
+    }
+
+    .card-title {
+      margin-top: $card-login-title-margin;
+      margin-bottom: $card-login-title-margin;
+      font-weight: $font-weight-bolder;
+    }
+  }
+}
+
+.register-page {
+  .page-header {
+    background-position: top center;
+  }
+}
+@media all and (max-width: 991px) {
+  .page-header {
+    &.pricing-page,
+    &.register-page {
+      min-height: fit-content !important;
+    }
+  }
+}

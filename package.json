@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "pm2-runtime ecosystem.config.js --env production",
-    "start:dev": "export NODE_ENV=development&&nodemon -r dotenv/config server.js",
+    "dev": "export NODE_ENV=development&&nodemon -r dotenv/config server.js",
     "test": "jest --detectOpenHandles --ci --reporters='default' --reporters='./github-actions-reporter' --forceExit",
     "build": "npm i && gulp",
     "preinstall": "npm install pm2 -g",
@@ -76,7 +76,8 @@
     "pretty-quick": "^3.1.3",
     "supertest": "^6.1.3",
     "webpack": "^5.33.2",
-    "webpack-cli": "^4.6.0"
+    "webpack-cli": "^4.6.0",
+    "sass": "^1.49.9"
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix"
