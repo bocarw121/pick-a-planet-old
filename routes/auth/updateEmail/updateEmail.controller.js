@@ -1,4 +1,6 @@
-const { updateUserEmail, getUserById } = require('../../../models/user.model');
+const { StatusCodes } = require('http-status-codes');
+const { Users } = require('../../../db/prisma');
+// const { updateUserEmail, getUserById } = require('../../../models/user.model');
 const { verifyToken, removeCookie } = require('../../../services/security');
 
 const getUpdateEmail = (req, res) => {
@@ -44,27 +46,33 @@ const updateEmail = async (req, res) => {
 
   const decoded = await verifyToken(req);
 
-  getUserById(decoded, (user) => {
-    if (!user) {
-      removeCookie(res);
-      res.redirect('login');
-    }
-
-    updateUserEmail(email, decoded, (dbError, result) => {
-      if (dbError) {
-        return res.status(500).render('update-email', {
-          message: 'Unable to update your email at the moment.',
-        });
-      }
-      if (result) {
-        return res.status(200).render('update-email', {
-          // eslint-disable-next-line quotes
-          complete: "You're email has been updated succesfuly.",
-          email,
-        });
-      }
-    });
+  const user = await Users.findUnique({
+    where: {
+      id: decoded.id,
+    },
   });
+
+  if (!user) {
+    removeCookie(res);
+    res.redirect('login');
+  }
+
+  const updatedUser = await Users.update({
+    where: {
+      id: decoded.id,
+    },
+    data: {
+      email,
+    },
+  });
+
+  if (updatedUser) {
+    return res.status(StatusCodes.OK).render('update-email', {
+      // eslint-disable-next-line quotes
+      complete: "You're email has been updated succesfuly.",
+      email,
+    });
+  }
 };
 
 module.exports = {

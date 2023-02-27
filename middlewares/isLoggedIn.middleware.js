@@ -1,4 +1,5 @@
-const { getUserById } = require('../models/user.model');
+const { prisma } = require('../db/prisma');
+
 const { verifyToken } = require('../services/security');
 
 // isLogged in
@@ -9,12 +10,16 @@ const isLoggedIn = async (req, res, next) => {
 
     // check if user still exists
 
-    getUserById(decoded, (user) => {
-      if (user.id) {
-        req.user = user;
-        return next();
-      }
+    const user = await prisma.users.findUnique({
+      where: {
+        id: decoded.id,
+      },
     });
+
+    if (user) {
+      req.user = user;
+      return next();
+    }
   } else {
     return next();
   }
