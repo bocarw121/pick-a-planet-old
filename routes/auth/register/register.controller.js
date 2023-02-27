@@ -15,18 +15,13 @@ const getRegistration = (req, res) => {
 };
 
 const validateRegistrationForm = (req, res, next) => {
-  const value = validationSchema.register.validate(req.body);
+  const validate = validationSchema.register.validate(req.body);
 
-  if (value.error) {
-    const message = value.error.details[0].message;
-    // const type = value.error.details[0].type;
-    if (message.includes('ref:password')) {
-      return res.status(401).render('register', {
-        message: 'Passwords do not match',
-      });
-    }
+  if (validate.error) {
+    const message = validate.error.details[0].message;
+
     return res.status(401).render('register', {
-      message: value.error.details[0].message,
+      message,
     });
   }
 
