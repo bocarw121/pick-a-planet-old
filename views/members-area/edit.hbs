@@ -1,0 +1,120 @@
+<html lang="en">
+  {{> dashboardMeta }}
+
+  <body class="dark-edition">
+    <div class="wrapper">
+      <!-- Sidebar -->
+      {{> profileSidebar}}
+
+      <!-- End Sidebar -->
+      <div class="main-panel">
+        <!-- Navbar -->
+        {{!-- TODO Get user from profile controller --}} {{> profileNavbar}}
+        <!-- End Navbar -->
+
+        <!-- User Profile Start  -->
+        {{!-- Get user from profile controller --}}
+        <div class="content">
+          <div class="container-fluid">
+            <div class="row justify-content-center">
+              <div class="col-md-8">
+                <!-- card -->
+                <div class="card">
+                  <div class="card-header card-header-icon card-header-rose">
+                    <div class="card-icon">
+                      <i class="material-icons">perm_identity</i>
+                    </div>
+                    <h4 class="card-title">
+                      Edit Profile -
+                      <small class="category">Complete your profile</small>
+                    </h4>
+                  </div>
+                  <!-- card body -->
+                  <div class="card-body">
+                    <form>
+                      <!-- row -->
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="md-label-floating">First Name</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              name="firstName"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="md-label-floating">Last Name</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              name="lastName"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <!-- row -->
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="md-label-floating">Username</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              name="username"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="md-label-floating"
+                              >Email address</label
+                            >
+                            <input
+                              type="email"
+                              class="form-control"
+                              name="email"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- row -->
+                      {{!-- TODO - May implement --}}
+                      {{!-- <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label class="md-label-floating"
+                              >This is something about me</label
+                            >
+                            <textarea
+                              class="form-control p-40"
+                              name="aboutMe"
+                            ></textarea>
+                          </div>
+                        </div>
+                      </div> --}}
+
+                      <button type="submit" class="btn btn-rose pull-right">
+                        Update Profile
+                      </button>
+                      <div class="clearfix"></div>
+                    </form>
+                  </div>
+                  <!-- Card End -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- User Profile End  -->
+        {{!-- Footer --}} {{> profileFooter }}
+      </div>
+    </div>
+    {{!-- Sidebar filters --}} {{!-- {{> sidebarFilters}} --}}
+    <!--   Core JS Files   -->
+    {{> coreJs}}
+  </body>
+</html>

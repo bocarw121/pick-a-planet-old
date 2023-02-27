@@ -41,7 +41,7 @@ const handleLogin = async (req, res) => {
         if (req.url === '/change') {
           return res.redirect('../../editpassword');
         }
-        return res.redirect('profile');
+        return res.redirect('dashboard');
       });
     }
   });
