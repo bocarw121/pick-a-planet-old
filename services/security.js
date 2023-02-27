@@ -5,7 +5,7 @@ const { JWT } = require('../utils/config');
 
 const { JWT_COOKIE_EXPIRES, JWT_EXPIRES_IN, JWT_PRIVATE } = JWT;
 
-const setCookie = (id, response) => {
+const setCookie = (id) => {
   // create unique tokens for user
   const token = jwt.sign({ id: id }, JWT_PRIVATE, {
     expiresIn: JWT_EXPIRES_IN,
@@ -15,7 +15,7 @@ const setCookie = (id, response) => {
     httpOnly: true,
   };
   // Set cookie up in browser
-  return response('userId', token, cookieSettings);
+  return { cookie: 'userId', token, cookieSettings };
 };
 
 const verifyToken = async (req) => {
@@ -34,8 +34,9 @@ const setPassword = async (password) => {
   return encryptedPassword;
 };
 
-const verifyPassword = async (res, password) => {
-  const verified = await argon2.verify(res[0].password, password);
+const verifyPassword = async (user, password) => {
+  console.log(password);
+  const verified = await argon2.verify(user.password, password);
   return verified;
 };
 

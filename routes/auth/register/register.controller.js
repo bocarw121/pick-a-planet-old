@@ -5,6 +5,11 @@ const { addUser, checkIfUserExists } = require('../../../models/user.model');
 const {
   sendRegistrationConfirmationEmail,
 } = require('../../../services/sendgrid.js');
+const prisma = require('../../../db/prisma');
+const { setPassword } = require('../../../services/security');
+const capitalize = require('../../../utils/functions');
+const { createCustomError } = require('../../../errors/custom-error');
+const { StatusCodes } = require('http-status-codes');
 
 const getRegistration = (req, res) => {
   res.render('register');
@@ -48,23 +53,50 @@ const userCheck = (req, res, next) => {
   });
 };
 
-const handleRegistration = async (req, res) => {
-  const { firstName, email } = req.body;
+const handleRegistration = async (req, res, next) => {
+  const { firstName, lastName, email, password } = req.body;
 
-  addUser(req.body, (dbError) => {
-    if (dbError) {
-      return res.status(400).render('register', {
-        message: 'Unable to register at the moment',
-      });
-    } else {
-      if (NODE_ENV === 'production') {
-        sendRegistrationConfirmationEmail(email, firstName);
-      }
-      return res.status(201).render('register', {
-        complete: 'User Registered',
-      });
-    }
+  const user = await prisma.Users.create({
+    data: {
+      firstName: capitalize(firstName),
+      lastName: capitalize(lastName),
+      email,
+      password: await setPassword(password),
+    },
   });
+
+  if (user) {
+    console.log('User created');
+    return next(
+      createCustomError(
+        'Unable to register at the moment',
+        StatusCodes.INTERNAL_SERVER_ERROR,
+      ),
+    );
+  }
+
+  if (NODE_ENV === 'production') {
+    sendRegistrationConfirmationEmail(email, firstName);
+  }
+
+  return res.status(StatusCodes.CREATED).render('register', {
+    complete: 'User Registered',
+  });
+
+  // addUser(req.body, (dbError) => {
+  //   if (dbError) {
+  //     return res.status(400).render('register', {
+  //       message: 'Unable to register at the moment',
+  //     });
+  //   } else {
+  //     if (NODE_ENV === 'production') {
+  //       sendRegistrationConfirmationEmail(email, firstName);
+  //     }
+  //     return res.status(201).render('register', {
+  //       complete: 'User Registered',
+  //     });
+  //   }
+  // });
 };
 
 module.exports = {
