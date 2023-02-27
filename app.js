@@ -1,5 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
+require('express-async-errors');
 
 const router = require('./routes/routers');
 const authRouter = require('./routes/auth/auth.routers');
