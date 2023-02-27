@@ -14,6 +14,8 @@ const {
   production,
 } = require('./middlewares/locals.middleware');
 const { loggers } = require('./middlewares/logger.middleware');
+const notFound = require('./middlewares/not-found');
+const errorHandlerMiddleware = require('./middlewares/error-handler');
 
 const app = express();
 
@@ -48,5 +50,8 @@ if (NODE_ENV === 'production') {
 
 app.use('/', isLoggedIn, user, router);
 app.use('/', authRouter);
+
+app.use(notFound);
+app.use(errorHandlerMiddleware);
 
 module.exports = app;
