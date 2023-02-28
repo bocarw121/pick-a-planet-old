@@ -54,7 +54,7 @@ async function onSubmit(e) {
   const lastName = lastNameInput.value;
   const email = emailInput.value;
   const emailConfirm = emailConfirmInput.value;
-  console.log('inside the onSubmit', 1);
+
   if (!firstName || !lastName || !email || !emailConfirm) {
     return;
   }
@@ -69,8 +69,6 @@ async function onSubmit(e) {
   try {
     const url = new URL(window.location.origin);
     url.pathname = '/profile/edit';
-
-    console.log('url', url);
 
     const response = await fetch(url, {
       method: 'POST',
@@ -90,8 +88,8 @@ async function onSubmit(e) {
       // reload page
       const timeout = setTimeout(() => {
         window.location.reload();
-        // clearTimeout(timeout);
       }, 2000);
+      clearTimeout(timeout);
       return;
     }
 
@@ -111,7 +109,6 @@ async function onSubmit(e) {
   emailConfirmInput.value = '';
 }
 
-console.log('After on submit', 3);
 // clear listeners on unmount
 function handleUnload() {
   firstNameInput.removeEventListener('input', handleInputs);
