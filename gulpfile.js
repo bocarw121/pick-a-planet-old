@@ -7,13 +7,11 @@ const postcss = require('gulp-postcss');
 const cssnano = require('cssnano');
 const autoprefixer = require('autoprefixer');
 const del = require('del');
-const concat = require('gulp-concat');
 const { src, series, parallel, dest } = gulp;
 
 const hbsPath = './**/*.hbs';
 const imgPath = './**/*+(png|jpg|gif)';
 const jsPath = './**/*.js';
-const cssPath = './**/*.css';
 
 const hbsTask = (done) => {
   src([hbsPath, '!./node_modules/**']).pipe(gulp.dest('./dist/'));
@@ -45,25 +43,14 @@ const jsTask = (done) => {
     .pipe(sourcemaps.init())
     .pipe(terser())
     .pipe(gulpIgnore.exclude('./gulpfile.js'))
-    .pipe(sourcemaps.write('.'))
+    // .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./dist/'));
   done();
 };
 
 const cssTask = (done) => {
-  src([cssPath, '!./node_modules/**', '!./public/css/bootstrap.css'])
+  src(['./public/css/styles.css', '!./node_modules/**'])
     .pipe(sourcemaps.init())
-    .pipe(concat('styles.css'))
-    .pipe(postcss([autoprefixer(), cssnano()]))
-    .pipe(sourcemaps.write('.'))
-    .pipe(dest('./dist/public/css'));
-  done();
-};
-
-const bootsrapAndStyleTask = (done) => {
-  src([cssPath, './**/bootstrap.css', './**/style.css', '!./node_modules/**'])
-    .pipe(sourcemaps.init())
-    .pipe(concat('member-and-contact.css'))
     .pipe(postcss([autoprefixer(), cssnano()]))
     .pipe(sourcemaps.write('.'))
     .pipe(dest('./dist/public/css'));
@@ -98,7 +85,6 @@ exports.default = series(
     hbsTask,
     imgTask,
     jsTask,
-    bootsrapAndStyleTask,
     cssTask,
     materialUiTasks,
     jsonTask,
