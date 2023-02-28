@@ -85,6 +85,12 @@ const cleanUp = (done) => {
   done();
 };
 
+// prisma task
+const prismaTask = (done) => {
+  src('./prisma/schema.prisma').pipe(dest('dist/prisma'));
+  done();
+};
+
 exports.clean = cleanUp;
 
 exports.default = series(
@@ -96,5 +102,6 @@ exports.default = series(
     cssTask,
     materialUiTasks,
     jsonTask,
+    prismaTask,
   ),
 );
