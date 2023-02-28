@@ -1,4 +1,4 @@
-const { db } = require('../../services/database');
+const { prisma } = require('../../db/prisma');
 const { setPassword } = require('../../services/security');
 const capitalize = require('../../utils/functions');
 
@@ -12,13 +12,16 @@ const addTestUser = async (user, result) => {
     password: await setPassword(password),
   };
 
-  db.query('INSERT INTO users SET ?', newUser, (error, res) => {
-    if (error) {
-      result(error, null);
-      return;
-    }
-    result(null, { id: res.insertId });
+  const create = await prisma.users.create({
+    data: {
+      firstName: newUser.firstName,
+      lastName: newUser.lastName,
+      email: newUser.email,
+      password: newUser.password,
+    },
   });
+
+  result(null, create);
 };
 
 module.exports = {

@@ -1,0 +1,31 @@
+<html lang='en'>
+ {{> dashboardMeta  }}
+ 
+ <body class="dark-edition">
+    <div class="wrapper">
+      <!-- Sidebar -->
+      {{> profileSidebar}}
+
+      <!-- End Sidebar -->
+      <div class="main-panel">
+        <!-- Navbar -->
+        {{!-- TODO Get user from profile controller --}} 
+        {{> profileNavbar}}
+        <!-- End Navbar -->
+
+        <!-- Dashboard  -->
+        {{!-- Get user from profile controller --}}
+        {{> dashboardContent}}
+    
+        <!-- User Profile End  -->
+       {{!-- Footer --}}
+        {{> profileFooter }}
+      
+    </div>
+    {{!-- Sidebar filters --}}
+    {{!-- {{> sidebarFilters}} --}}
+    <!--   Core JS Files   -->
+    {{> coreJs}}
+  </body>
+  
+</html>

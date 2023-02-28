@@ -1,69 +1,78 @@
 const { NODE_ENV } = require('../../../utils/config');
 
-const { addUser, checkIfUserExists } = require('../../../models/user.model');
-
 const {
   sendRegistrationConfirmationEmail,
 } = require('../../../services/sendgrid.js');
+const { Users } = require('../../../db/prisma');
+const { setPassword } = require('../../../services/security');
+const capitalize = require('../../../utils/functions');
+const { createCustomError } = require('../../../errors/custom-error');
+const { StatusCodes } = require('http-status-codes');
+const { validationSchema } = require('../../../validation/schemas');
 
 const getRegistration = (req, res) => {
   res.render('register');
 };
 
 const validateRegistrationForm = (req, res, next) => {
-  const { firstName, lastName, email, password, passwordConfirm } = req.body;
+  const validate = validationSchema.register.validate(req.body);
 
-  if (!password || !email || !firstName || !lastName) {
-    return res.status(401).render('register', {
-      message: 'You must fill out all fields',
-    });
-  } else if (password.length < 6) {
-    return res.status(401).render('register', {
-      message: 'Your password should be at least 6 characters',
-    });
-  } else if (password !== passwordConfirm) {
-    return res.status(401).render('register', {
-      message: 'Passwords do not match',
+  if (validate.error) {
+    const message = validate.error.details[0].message;
+
+    return res.status(StatusCodes.BAD_REQUEST).render('register', {
+      message,
     });
   }
+
   next();
 };
 
-const userCheck = (req, res, next) => {
+const userCheck = async (req, res, next) => {
   const { email } = req.body;
 
-  checkIfUserExists(email, (err, results, userNew) => {
-    if (err.db) {
-      return res.status(400).render('register', {
-        message: 'Unable to register at the moment',
-      });
-    }
-    if (results.id) {
-      return res.status(401).render('register', {
-        message: `${email} has already been registered`,
-      });
-    } else if (userNew.newUser) {
-      next();
-    }
+  const user = await Users.findFirst({
+    where: {
+      email: email,
+    },
   });
+
+  if (user) {
+    return res.status(StatusCodes.BAD_REQUEST).render('register', {
+      message: `${email} has already been registered`,
+    });
+  }
+
+  next();
 };
 
-const handleRegistration = async (req, res) => {
-  const { firstName, email } = req.body;
+const handleRegistration = async (req, res, next) => {
+  const { firstName, lastName, email, password } = req.body;
 
-  addUser(req.body, (dbError) => {
-    if (dbError) {
-      return res.status(400).render('register', {
-        message: 'Unable to register at the moment',
-      });
-    } else {
-      if (NODE_ENV === 'production') {
-        sendRegistrationConfirmationEmail(email, firstName);
-      }
-      return res.status(201).render('register', {
-        complete: 'User Registered',
-      });
-    }
+  const user = await Users.create({
+    data: {
+      firstName: capitalize(firstName),
+      lastName: capitalize(lastName),
+      email,
+      password: await setPassword(password),
+    },
+  });
+
+  if (!user) {
+    return next(
+      createCustomError(
+        'Unable to register at the moment',
+        StatusCodes.INTERNAL_SERVER_ERROR,
+      ),
+    );
+  }
+
+  if (NODE_ENV === 'production') {
+    sendRegistrationConfirmationEmail(email, firstName);
+  }
+
+  return res.status(StatusCodes.CREATED).render('register', {
+    complete: 'User Registered',
   });
 };
 
@@ -71,6 +80,5 @@ module.exports = {
   getRegistration,
   userCheck,
   validateRegistrationForm,
-  checkIfUserExists,
   handleRegistration,
 };

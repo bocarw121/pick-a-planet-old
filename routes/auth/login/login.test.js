@@ -40,9 +40,9 @@ describe('Test Login', () => {
         .send(firstUserLogin)
         .expect(302);
 
-      expect(response.headers.location).toContain('profile');
+      expect(response.headers.location).toContain('dashboard');
 
-      expect(response.text).toContain('profile');
+      expect(response.text).toContain('dashboard');
     });
   });
 });
