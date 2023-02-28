@@ -9,6 +9,7 @@ env:
   JWT_PRIVATE: ${{ secrets.JWT_PRIVATE }}
   ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
   SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+  DATABASE_URL: ${{secrets.DATABASE_URL}}
 on:
   workflow_run:
     workflows: ['Test']
