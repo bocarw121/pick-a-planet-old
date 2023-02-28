@@ -1,4 +1,4 @@
-const { db } = require('../../services/database');
+const { prisma } = require('../../db/prisma');
 const { addTestUser } = require('../testData/testModel.data');
 
 global.loadUser = async (user) => {
@@ -7,8 +7,19 @@ global.loadUser = async (user) => {
   });
 };
 
-global.removeUser = (email) => {
-  db.query(`DELETE FROM users WHERE email = '${email}'`, (err) => {
-    if (err) throw err;
+global.removeUser = async (email) => {
+  const user = await prisma.users.findFirst({
+    where: {
+      email,
+    },
   });
+
+  await prisma.users.delete({
+    where: {
+      id: user.id,
+    },
+  });
+
+  // close connection to prisma
+  await prisma.$disconnect();
 };

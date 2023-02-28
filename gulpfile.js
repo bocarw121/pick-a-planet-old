@@ -70,6 +70,11 @@ const bootsrapAndStyleTask = (done) => {
   done();
 };
 
+const materialUiTasks = (done) => {
+  src(['./public/css/material-dashboard.*']).pipe(dest('./dist/public/css'));
+  done();
+};
+
 const jsonTask = (done) => {
   src('./*.json').pipe(dest('dist/'));
   done();
@@ -83,5 +88,13 @@ const cleanUp = (done) => {
 exports.clean = cleanUp;
 
 exports.default = series(
-  parallel(hbsTask, imgTask, jsTask, bootsrapAndStyleTask, cssTask, jsonTask),
+  parallel(
+    hbsTask,
+    imgTask,
+    jsTask,
+    bootsrapAndStyleTask,
+    cssTask,
+    materialUiTasks,
+    jsonTask,
+  ),
 );

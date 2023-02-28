@@ -1,59 +1,52 @@
-<!DOCTYPE html>
 <html lang="en">
+  <!-- dashboard meta tag and style sheet  -->
+  {{> dashboardMeta  }}
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="description" content="profile">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Profile</title>
-  {{> favicons}}
-  {{> memberStyle}}
-</head>
+  <body class="dark-edition">
+    <div class="wrapper">
+      <!-- Sidebar -->
+      {{> profileSidebar}}
 
-<body>
-  {{> header}}
-  {{> nav}}
-  <div class="container mt-6 mb-5">
-    <div class="col-lg-12 mb-6">
-      <div class="card text-center">
-        <div class="card-header">
-          <h1>Welcome to the members area {{user.firstname}}! </h1>
+      <!-- End Sidebar -->
+      <div class="main-panel">
+        <!-- Navbar -->
+        {{!-- TODO Get user from profile controller --}} 
+        {{> profileNavbar}}
+        <!-- End Navbar -->
+
+        <!-- User Profile Start  -->
+        {{!-- TODO Get user from profile controller --}}
+         {{!-- TODO Make a fetch call to get some planet data --}}
+        <div class='content d-flex justify-content-center'>
+           <div class='col-md-6'>
+          <div class='card card-profile'>
+            <div class='card-avatar'>
+              <a href='javascript:;'>
+                <!-- TODO ADD user image here -->
+                <img class='img' src='/public/images/profile/avatar.png' />
+              </a>
+            </div>
+            <div class='card-body'>
+              <h6 class='card-category text-gray'>
+                {{!-- TODO Add occupation to user model --}}
+                Position </h6>
+              <h4 class='card-title'>{{user.firstName}} {{user.lastName}}</h4>
+              <p class='card-description'>
+                About me
+              </p>
+              {{!-- <a href='javascript:;' class='btn btn-rose btn-round'>Follow</a> --}}
+            </div>
+          </div>
         </div>
-        <div class="card-footer text-muted text text-danger"></div>
+        </div>
+        <!-- User Profile End  -->
+       {{!-- Footer --}}
+        {{> profileFooter }}
       </div>
     </div>
-    <div class="row">
-      <div class=" col-md-10 col-lg-4">
-        <div class="card mx-auto mb-5 auto">
-          <div class="avatar-ctn ">
-            <img src="/public/images/profile/avatar.png" class="avatar" alt="user profile picture" />
-          </div>
-          <div class="card-body">
-            <h2 class="card-title text-center">{{user.firstname}}</h2>
-            <p class="card-text mb-3">Welcome to your profile page</p>
-            <a href="#" class="btn btn-primary mb-3">{{user.email}}</a>
-            <br />
-            <a href="/update-email">Update email</a>
-            <br />
-            <a href="/update-password">Update password</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    {{!-- Add video content --}}
-    <div class="container video-content col-12 mt-5">
-      <div class="card planet-video earth"></div>
-      <div class="card planet-video jupiter"></div>
-      <div class="card planet-video mars"></div>
-      <div class="card planet-video mercury"></div>
-      <div class="card planet-video neptune"></div>
-      <div class="card planet-video pluto"></div>
-      <div class="card planet-video saturn"></div>
-      <div class="card planet-video uranus"></div>
-      <div class="card planet-video venus"></div>
-    </div>
-  </div>
-  {{> footer}}
-</body>
-
+    {{!-- Sidebar filters --}}
+    {{!-- {{> sidebarFilters}} --}}
+    <!--   Core JS Files   -->
+    {{> coreJs}}
+  </body>
 </html>

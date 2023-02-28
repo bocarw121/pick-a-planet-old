@@ -1,56 +1,42 @@
 const { NODE_ENV } = require('../../../utils/config');
-const {
-  checkIfUserExists,
-  updateUserPasswordByEmail,
-} = require('../../../models/user.model');
+
 const { sendResetEmail } = require('../../../services/sendgrid');
+const { Users } = require('../../../db/prisma');
+const { validationSchema } = require('../../../validation/schemas');
 
 const getPasswordReset = (req, res) => {
   res.render('reset-password');
 };
 
 const resetPassword = async (req, res) => {
-  // selects inputed email from database
   const { email } = req.body;
 
-  if (!email) {
+  const validate = validationSchema.email.validate(email);
+
+  if (validate.error) {
     return res.status(401).render('reset-password', {
-      message: 'Please enter your email to reset your password',
+      message: 'Please enter a valid email',
     });
   }
 
-  checkIfUserExists(email, async (err, userExits, noUser) => {
-    // Database Error
-    if (err.db) {
-      return res.render('reset-password', {
-        message: 'Unable to reset your password at the moment',
-      });
-    }
-    if (noUser) {
-      return res.status(401).render('reset-password', {
-        message: 'The email you entered doesn\'t match the one on file',
-      });
-    }
-    if (userExits) {
-      updateUserPasswordByEmail(email, (dbError, reset) => {
-        // Database Error
-        if (dbError) {
-          return res.status(400).render('reset-password', {
-            message: 'Unable to reset your password at the moment', //TODO:
-          });
-        }
+  const user = await Users.findUnique({
+    where: {
+      email,
+    },
+  });
 
-        if (reset) {
-          // Sends email with the updated password
-          if (NODE_ENV === 'production') {
-            sendResetEmail(email, reset.update);
-          }
-          return res.status(200).render('reset-password', {
-            complete: 'Instructions have been sent to your email',
-          });
-        }
-      });
-    }
+  if (!user) {
+    return res.status(401).render('reset-password', {
+      message: 'Email does not exist',
+    });
+  }
+
+  // Sends email with the updated password
+  if (NODE_ENV === 'production') {
+    sendResetEmail(email, reset.update);
+  }
+  return res.status(200).render('reset-password', {
+    complete: 'Instructions have been sent to your email',
   });
 };
 

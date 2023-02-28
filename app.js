@@ -1,5 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
+require('express-async-errors');
 
 const router = require('./routes/routers');
 const authRouter = require('./routes/auth/auth.routers');
@@ -14,6 +15,8 @@ const {
   production,
 } = require('./middlewares/locals.middleware');
 const { loggers } = require('./middlewares/logger.middleware');
+const notFound = require('./middlewares/not-found');
+const errorHandlerMiddleware = require('./middlewares/error-handler');
 
 const app = express();
 
@@ -48,5 +51,8 @@ if (NODE_ENV === 'production') {
 
 app.use('/', isLoggedIn, user, router);
 app.use('/', authRouter);
+
+app.use(notFound);
+app.use(errorHandlerMiddleware);
 
 module.exports = app;
