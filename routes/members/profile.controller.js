@@ -4,6 +4,7 @@ const { StatusCodes } = require('http-status-codes');
 const { verifyToken, removeCookie } = require('../../services/security');
 const { validationSchema } = require('../../validation/schemas');
 const { Users } = require('../../db/prisma');
+const capitalize = require('../../utils/functions');
 
 const getProfile = (req, res) => {
   if (req.user) {
@@ -104,8 +105,8 @@ const updateUser = async (req, res) => {
       id: decoded.id,
     },
     data: {
-      firstName: user.firstName,
-      lastName: user.lastName,
+      firstName: capitalize(user.firstName),
+      lastName: capitalize(user.lastName),
       email: user.email,
     },
   });

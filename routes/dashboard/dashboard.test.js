@@ -1,7 +1,7 @@
 const { request } = require('../../__test__/testData/common.data');
 const { profileTestUser } = require('../../__test__/testData/users.data');
 
-describe('GET /', async () => {
+describe('GET /', () => {
   beforeAll(async () => {
     await loadUser(profileTestUser);
   });

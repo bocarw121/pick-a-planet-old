@@ -20,7 +20,7 @@ const validateRegistrationForm = (req, res, next) => {
   if (validate.error) {
     const message = validate.error.details[0].message;
 
-    return res.status(401).render('register', {
+    return res.status(StatusCodes.BAD_REQUEST).render('register', {
       message,
     });
   }
@@ -31,7 +31,7 @@ const validateRegistrationForm = (req, res, next) => {
 const userCheck = async (req, res, next) => {
   const { email } = req.body;
 
-  const user = await Users.findUnique({
+  const user = await Users.findFirst({
     where: {
       email: email,
     },

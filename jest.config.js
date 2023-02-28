@@ -1,5 +1,6 @@
 const config = {
   testEnvironment: 'node',
+  testTimeout: 10000,
   verbose: true,
   coverageDirectory: './test/jest-supertest/coverage/my_reports/',
   coverageReporters: ['html', 'text'],

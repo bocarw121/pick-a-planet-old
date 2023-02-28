@@ -7,6 +7,7 @@
     "start": "pm2-runtime ecosystem.config.js --env production",
     "dev": "export NODE_ENV=development&&nodemon -r dotenv/config server.js",
     "test": "jest --detectOpenHandles --ci --reporters='default' --reporters='./github-actions-reporter' --forceExit",
+    "test:watch": "jest --detectOpenHandles  --watchAll",
     "build": "npm i && gulp",
     "preinstall": "npm install pm2 -g",
     "heroku-postbuild": "",

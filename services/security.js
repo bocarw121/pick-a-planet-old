@@ -35,7 +35,6 @@ const setPassword = async (password) => {
 };
 
 const verifyPassword = async (user, password) => {
-  console.log(password);
   const verified = await argon2.verify(user.password, password);
   return verified;
 };
