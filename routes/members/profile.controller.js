@@ -44,7 +44,6 @@ const validateUserInformation = (req, res, next) => {
     // Were returning json instead of rendering the page with the error message
     if (req.cookies.userId) {
       if (validate.error) {
-        console.log('validate.error1');
         return res.status(StatusCodes.BAD_REQUEST).json({
           message: validate.error.details[0].message,
           success: false,
@@ -97,8 +96,6 @@ const updateUser = async (req, res) => {
   if (email) {
     user.email = email;
   }
-
-  console.log('user', user);
 
   const updatedUser = await Users.update({
     where: {

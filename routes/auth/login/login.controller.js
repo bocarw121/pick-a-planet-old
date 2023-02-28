@@ -54,7 +54,6 @@ const handleLogin = async (req, res) => {
     // }
     return res.redirect('dashboard');
   } catch (error) {
-    console.log(error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('login', {
       message: 'Something went wrong',
     });

@@ -8,7 +8,6 @@ global.loadUser = async (user) => {
 };
 
 global.removeUser = async (email) => {
-  console.log('Removing user from database', email);
   const user = await prisma.users.findFirst({
     where: {
       email,
