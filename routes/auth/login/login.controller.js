@@ -9,7 +9,7 @@ const getLogin = (req, res, next) => {
   if (req.user) {
     res.redirect('profile');
   } else {
-    res.render('login');
+    res.render('auth/login');
   }
 };
 
@@ -17,7 +17,7 @@ const handleLogin = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(StatusCodes.UNAUTHORIZED).render('login', {
+    return res.status(StatusCodes.UNAUTHORIZED).render('auth/login', {
       message: 'You must provide an email and password',
     });
   }
@@ -30,7 +30,7 @@ const handleLogin = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(StatusCodes.UNAUTHORIZED).render('login', {
+      return res.status(StatusCodes.UNAUTHORIZED).render('auth/login', {
         message: 'email / password incorrect',
       });
     }
@@ -38,7 +38,7 @@ const handleLogin = async (req, res) => {
     const verified = await verifyPassword(user, password);
 
     if (!verified) {
-      return res.status(StatusCodes.UNAUTHORIZED).render('login', {
+      return res.status(StatusCodes.UNAUTHORIZED).render('auth/login', {
         message: 'email / password incorrect',
       });
     }
@@ -52,9 +52,10 @@ const handleLogin = async (req, res) => {
     // if (req.url === '/change') {
     //   return res.redirect('../../editpassword');
     // }
-    return res.redirect('dashboard');
+    console.log('redirecting to dashboard');
+    return res.redirect('/dashboard');
   } catch (error) {
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('login', {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('auth/login', {
       message: 'Something went wrong',
     });
   }

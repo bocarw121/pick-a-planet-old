@@ -17,6 +17,7 @@ const {
 const { loggers } = require('./middlewares/logger.middleware');
 const notFound = require('./middlewares/not-found');
 const errorHandlerMiddleware = require('./middlewares/error-handler');
+const morgan = require('morgan');
 
 const app = express();
 
@@ -26,8 +27,11 @@ app.set('view engine', 'hbs');
 
 app.set('views', views);
 
-// Use loggers only in development and production
-if (NODE_ENV === 'development' || NODE_ENV === 'production') {
+if (NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+if (NODE_ENV === 'production') {
+  // Use loggers only in development and production
   app.use(loggers);
 }
 
@@ -50,7 +54,7 @@ if (NODE_ENV === 'production') {
 }
 
 app.use('/', isLoggedIn, user, router);
-app.use('/', authRouter);
+app.use('/auth', authRouter);
 
 app.use(notFound);
 app.use(errorHandlerMiddleware);

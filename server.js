@@ -9,7 +9,7 @@ const server = http.createServer(app);
 if (NODE_ENV === 'production') {
   app.use(enforceHttps);
 }
-const PORT = ENV_PORT || 3000;
+const PORT = ENV_PORT || 8080;
 
 server.listen(PORT, () => {
   console.log(`Your server is listening on port ${PORT}`);

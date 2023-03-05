@@ -4,6 +4,7 @@ const views = [
   path.join(__dirname, '../views'),
   path.join(__dirname, '../views/planets'),
   path.join(__dirname, '../views/members-area'),
+  path.join(__dirname, '../views/auth'),
 ];
 
 const mainDirectory = path.join(__dirname, '../');

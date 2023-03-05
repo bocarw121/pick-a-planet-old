@@ -89,7 +89,7 @@ async function onSubmit(e) {
       const timeout = setTimeout(() => {
         window.location.reload();
       }, 2000);
-      clearTimeout(timeout);
+
       return;
     }
 
